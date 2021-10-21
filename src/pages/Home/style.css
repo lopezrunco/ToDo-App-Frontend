@@ -1,0 +1,28 @@
+body {
+    padding-top: 4.5rem;
+}
+
+.card-title {
+    margin-bottom: 0;
+}
+
+.nav.nav-pills > li {
+    cursor: pointer;
+}
+
+[contentEditable=true]:empty:not(:focus)::before {
+    content:attr(data-placeholder)
+}
+
+[contenteditable=true]:focus {
+    outline: 2px solid #6caf9c;
+}
+
+#todos-container {
+    height: auto !important;
+}
+
+#map {
+    height: 300px;
+    border-radius: .4rem;
+}
