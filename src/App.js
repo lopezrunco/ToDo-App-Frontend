@@ -14,17 +14,18 @@ function App() {
     <Router>
       <div className="App">
 
-          <Nav />
-
         {/* Definicion de las rutas para cada uno de los componentes a mostrar */}
         <Switch>
           <Route path="/stats">
+            <Nav />
             <Stats />
           </Route>
           <Route path="/prefs">
+            <Nav />
             <Prefs />
           </Route>
           <Route path="/home">
+            <Nav />
             <Home />
           </Route>
           <Route path="/">
