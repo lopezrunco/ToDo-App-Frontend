@@ -1,4 +1,5 @@
 import './style.css'
+import Card from './components/Card'
 
 function Landing() {
 
@@ -32,84 +33,30 @@ function Landing() {
                         <p className="lead fw-normal">And an even wittier subheading to boot. Jumpstart your marketing efforts with
                             this
                             example based on Apple’s marketing pages.</p>
-                        <a className="btn btn-outline-secondary" href="home.html">Ingresar</a>
+                        <a className="btn btn-outline-secondary" href="home">Ingresar</a>
                     </div>
                     <div className="product-device shadow-sm d-none d-md-block"></div>
                     <div className="product-device product-device-2 shadow-sm d-none d-md-block"></div>
                 </div>
 
                 <div className="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
-                    <div className="bg-dark me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
-                        <div className="my-3 py-3">
-                            <h2 className="display-5">Another headline</h2>
-                            <p className="lead">And an even wittier subheading.</p>
-                        </div>
-                        <div className="bg-light shadow-sm mx-auto" style={cardStyle}></div>
-                    </div>
-                    <div className="bg-light me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-                        <div className="my-3 p-3">
-                            <h2 className="display-5">Another headline</h2>
-                            <p className="lead">And an even wittier subheading.</p>
-                        </div>
-                        <div className="bg-dark shadow-sm mx-auto" style={cardStyle}>
-                        </div>
-                    </div>
+                    <Card backgroundColor="#f3969a" imageBackgroundColor="#f8f9fa" textColorClass="text-white" />
+                    <Card backgroundColor="#f8f9fa" imageBackgroundColor="#f3969a" textColorClass="text-dark" />
                 </div>
 
                 <div className="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
-                    <div className="bg-light me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-                        <div className="my-3 p-3">
-                            <h2 className="display-5">Another headline</h2>
-                            <p className="lead">And an even wittier subheading.</p>
-                        </div>
-                        <div className="bg-dark shadow-sm mx-auto" style={cardStyle}>
-                        </div>
-                    </div>
-                    <div className="bg-primary me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
-                        <div className="my-3 py-3">
-                            <h2 className="display-5">Another headline</h2>
-                            <p className="lead">And an even wittier subheading.</p>
-                        </div>
-                        <div className="bg-light shadow-sm mx-auto" style={cardStyle}></div>
-                    </div>
+                    <Card backgroundColor="#f8f9fa" imageBackgroundColor="#f3969a" textColorClass="text-dark" />
+                    <Card backgroundColor="#78c2ad" imageBackgroundColor="#f8f9fa" textColorClass="text-white" />
                 </div>
 
                 <div className="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
-                    <div className="bg-light me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-                        <div className="my-3 p-3">
-                            <h2 className="display-5">Another headline</h2>
-                            <p className="lead">And an even wittier subheading.</p>
-                        </div>
-                        <div className="bg-body shadow-sm mx-auto" style={cardStyle}>
-                        </div>
-                    </div>
-                    <div className="bg-light me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-                        <div className="my-3 py-3">
-                            <h2 className="display-5">Another headline</h2>
-                            <p className="lead">And an even wittier subheading.</p>
-                        </div>
-                        <div className="bg-body shadow-sm mx-auto" style={cardStyle}>
-                        </div>
-                    </div>
+                    <Card backgroundColor="#f3969a" imageBackgroundColor="#f8f9fa" textColorClass="text-white" />
+                    <Card backgroundColor="#f8f9fa" imageBackgroundColor="#f3969a" textColorClass="text-dark" />
                 </div>
 
                 <div className="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
-                    <div className="bg-light me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-                        <div className="my-3 p-3">
-                            <h2 className="display-5">Another headline</h2>
-                            <p className="lead">And an even wittier subheading.</p>
-                        </div>
-                        <div className="bg-body shadow-sm mx-auto" style={cardStyle}>
-                        </div>
-                    </div>
-                    <div className="bg-light me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-                        <div className="my-3 py-3">
-                            <h2 className="display-5">Another headline</h2>
-                            <p className="lead">And an even wittier subheading.</p>
-                        </div>
-                        <div className="bg-body shadow-sm mx-auto" style={cardStyle}>
-                        </div>
-                    </div>
+                    <Card backgroundColor="#f8f9fa" imageBackgroundColor="#f3969a" textColorClass="text-dark" />
+                    <Card backgroundColor="#78c2ad" imageBackgroundColor="#f8f9fa" textColorClass="text-white" />
                 </div>
             </main>
 
