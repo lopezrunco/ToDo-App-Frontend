@@ -1,11 +1,28 @@
-import { Link } from 'react-router-dom'
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
+import { Check2Circle } from 'react-bootstrap-icons'
+import { AuthContext } from '../../App'
+
+// Uso de React Bootstrap
+import Button from 'react-bootstrap/Button'
 
 function Nav() {
+    const { dispatch } = React.useContext(AuthContext)
+    const navigate = useNavigate()
+
+    // Al clickear el boton de salir, se llama esta funcion
+    // que emite un dispatch de tipo logout y luego navega a la landing
+    // Ese dispatch emitido se toma en el app.js, que limpia el localstorage y resetea el estado de autenticacion del usuario 
+    const logout = () => {
+        dispatch({ type: 'LOGOUT' })
+        navigate('/')
+    }
+
     return (
         <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <div className="container-fluid">
-                <a className="navbar-brand" href="#">
-                    Tasky <i className="bi bi-check2-circle"></i>
+                <a className="navbar-brand" href="/">
+                    Tasky <Check2Circle />
                 </a>
 
                 <button className="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
@@ -25,7 +42,8 @@ function Nav() {
                             <a className="nav-link" href="/prefs">Preferencias</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/">Salir</a>
+                            {/* Uso de React Bootstrap */}
+                            <Button variant="link" className="nav-link" onClick={logout}>Salir</Button>
                         </li>
                     </ul>
                 </div>

@@ -6,18 +6,18 @@ function Home() {
             <div className="bg-light p-4 rounded">
                 <div className="input-group mb-4">
                     <input id="search-keywords" type="text" className="form-control" placeholder="Terminos de busqueda ..." />
-                    <button className ="btn btn-secondary" type ="button" onclick="applySearchFilter()">Buscar</button>
+                    <button className ="btn btn-secondary" type ="button" onlick="applySearchFilter()">Buscar</button>
                 </div>
 
                 <ul className="nav nav-pills nav-fill mb-4">
                     <li className="nav-item">
-                        <a className="nav-link active" onclick="applyTypeFilter('MY_DAY')">Mi día</a>
+                        <a className="nav-link active" onlick="applyTypeFilter('MY_DAY')">Mi día</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" onclick="applyTypeFilter('IMPORTANT')">Importantes</a>
+                        <a className="nav-link" onlick="applyTypeFilter('IMPORTANT')">Importantes</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" onclick="applyTypeFilter('ALL')">Todas</a>
+                        <a className="nav-link" onlick="applyTypeFilter('ALL')">Todas</a>
                     </li>
                 </ul>
 
@@ -33,7 +33,7 @@ function Home() {
 
             <button 
                 className="fab fab-fixed d-flex justify-content-center align-items-center bg-success"
-                onclick="openTodoCreatorModal()">
+                onlick="openTodoCreatorModal()">
                 <i className="bi bi-plus"></i>
             </button>
 
