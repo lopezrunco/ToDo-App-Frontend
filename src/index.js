@@ -1,3 +1,6 @@
+// Impotacion de tema de Bootswatch
+import 'bootswatch/dist/minty/bootstrap.min.css'
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
