@@ -141,6 +141,9 @@ function Login() {
                             <span className="form-error">{data.errorMessage}</span>
                         )}
                     </form>
+                    <p className="switch-login-register-message">
+                        No tienes cuenta? <a href="/register">Registrate</a>
+                    </p>
                 </div>
             </div>
         </div>
