@@ -1,6 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../App'
+import './style.css'
 
 // Funcion que maneja la concatenacion de la url con la que se hacen peticiones la API
 import { apiUrl } from '../../utils/api-url'
@@ -37,7 +38,7 @@ function Login() {
 
     // Funcion que envia los datos a la API
     const handleFormSubmit = event => {
-        
+
         // Evita que el formulario redireccione
         event.preventDefault()
 
@@ -88,10 +89,10 @@ function Login() {
     }
 
     return (
-        <div className="login-container">
-            <div className="card">
+        <div className="login-container d-flex flex-column justify-content-center align-items-center">
+            <div className="card p-5">
                 <div className="container">
-                    <form onSubmit={handleFormSubmit}>
+                    <form onSubmit={handleFormSubmit} className="d-flex flex-column justify-content-center align-items-center gap-2">
                         <h1>Inicio de sesión</h1>
 
                         <label htmlFor="email">
@@ -102,6 +103,8 @@ function Login() {
                                 onChange={handleInputChange}
                                 name="email"
                                 id="email"
+                                placeholder="Ej: juan@gmail.com"
+                                className="form-control"
                             />
                         </label>
 
@@ -113,6 +116,8 @@ function Login() {
                                 onChange={handleInputChange}
                                 name="password"
                                 id="password"
+                                placeholder="Tu contraseña"
+                                className="form-control"
                             />
                         </label>
 
@@ -124,11 +129,13 @@ function Login() {
                                 onChange={handleInputChange}
                                 name="token"
                                 id="token"
+                                placeholder="Si tienes, ingresa tu Token"
+                                className="form-control"
                             />
                         </label>
 
                         {/* Si se estan enviando datos al servidor, se deshabilita el boton de ingresar y se muestra mensaje de espera */}
-                        <button disabled={data.isSubmitting}>
+                        <button disabled={data.isSubmitting} className="btn btn-outline-secondary mt-3">
                             {data.isSubmitting ? (
                                 "Espere..."
                             ) : (
@@ -138,11 +145,11 @@ function Login() {
 
                         {/* Si hay mensajes de error, se muestran */}
                         {data.errorMessage && (
-                            <span className="form-error">{data.errorMessage}</span>
+                            <span className="form-error alert alert-danger">{data.errorMessage}</span>
                         )}
                     </form>
-                    <p className="switch-login-register-message">
-                        No tienes cuenta? <a href="/register">Registrate</a>
+                    <p className="switch-login-register-message mt-3 text-center">
+                        No tienes cuenta? <a href="/register">Regístrate</a>
                     </p>
                 </div>
             </div>

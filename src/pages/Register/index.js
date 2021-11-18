@@ -2,6 +2,8 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../App'
 
+import './style.css'
+
 // Funcion que maneja la concatenacion de la url con la que se hacen peticiones la API
 import { apiUrl } from '../../utils/api-url'
 
@@ -37,7 +39,7 @@ function Register() {
 
     // Funcion que envia los datos a la API
     const handleFormSubmit = event => {
-        
+
         // Evita que el formulario redireccione
         event.preventDefault()
 
@@ -88,20 +90,22 @@ function Register() {
     }
 
     return (
-        <div className="register-container">
-            <div className="card">
+        <div className="register-container d-flex flex-column justify-content-center align-items-center">
+            <div className="card p-5">
                 <div className="container">
-                    <form onSubmit={handleFormSubmit}>
+                    <form onSubmit={handleFormSubmit} className="d-flex flex-column justify-content-center align-items-center gap-2">
                         <h1>Regístrate</h1>
 
                         <label htmlFor="name">
-                            Name
+                            Nombre
                             <input
                                 type="text"
                                 value={data.name}
                                 onChange={handleInputChange}
                                 name="name"
                                 id="name"
+                                placeholder="Ej: Juan Pereira"
+                                className="form-control"
                             />
                         </label>
 
@@ -113,6 +117,8 @@ function Register() {
                                 onChange={handleInputChange}
                                 name="email"
                                 id="email"
+                                placeholder="Ej: juan@gmail.com"
+                                className="form-control"
                             />
                         </label>
 
@@ -124,11 +130,13 @@ function Register() {
                                 onChange={handleInputChange}
                                 name="password"
                                 id="password"
+                                placeholder="Tu contraseña"
+                                className="form-control"
                             />
                         </label>
 
                         {/* Si se estan enviando datos al servidor, se deshabilita el boton de ingresar y se muestra mensaje de espera */}
-                        <button disabled={data.isSubmitting}>
+                        <button disabled={data.isSubmitting} className="btn btn-outline-secondary mt-3">
                             {data.isSubmitting ? (
                                 "Espere..."
                             ) : (
@@ -138,11 +146,11 @@ function Register() {
 
                         {/* Si hay mensajes de error, se muestran */}
                         {data.errorMessage && (
-                            <span className="form-error">{data.errorMessage}</span>
+                            <span className="form-error alert alert-danger">{data.errorMessage}</span>
                         )}
                     </form>
-                    <p className="switch-login-register-message">
-                        Ya tienes tu cuenta? <a href="/login">Inicia sesion</a>
+                    <p className="switch-login-register-message mt-3 text-center">
+                        Ya tienes tu cuenta? <a href="/login">Inicia sesión</a>
                     </p>
                 </div>
             </div>
