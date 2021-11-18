@@ -112,13 +112,13 @@ function Home() {
 
                 <ul className="nav nav-pills nav-fill mb-4">
                     <li className="nav-item">
-                        <a className="nav-link" onClick={() => applyFilter(filters.DAY)}>Mi día</a>
+                        <a className="nav-link" onClick={() => applyFilter(filters.DAY)} href='/'>Mi día</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" onClick={() => applyFilter(filters.HIGH_PRIORITY)}>Importantes</a>
+                        <a className="nav-link" onClick={() => applyFilter(filters.HIGH_PRIORITY)} href='/'>Importantes</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link active" onClick={() => applyFilter(filters.ALL)}>Todas</a>
+                        <a className="nav-link active" onClick={() => applyFilter(filters.ALL)} href='/'>Todas</a>
                     </li>
                 </ul>
 
