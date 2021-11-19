@@ -1,0 +1,19 @@
+.login-container {
+  height: 100vh;
+
+  .back-home-btn {
+    position: absolute;
+    bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+}
+
+@media screen and (min-width: 576px) {
+  .login-container form input {
+    min-width: 350px;
+  }
+}

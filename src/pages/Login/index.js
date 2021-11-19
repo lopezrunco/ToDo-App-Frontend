@@ -1,7 +1,10 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../App'
-import './style.css'
+
+import { House } from 'react-bootstrap-icons'
+
+import './style.scss'
 
 // Funcion que maneja la concatenacion de la url con la que se hacen peticiones la API
 import { apiUrl } from '../../utils/api-url'
@@ -90,7 +93,14 @@ function Login() {
 
     return (
         <div className="login-container d-flex flex-column justify-content-center align-items-center">
-            <div className="card p-5">
+
+            {/* Background */}
+            <div className="position-fixed overflow-hidden w-100 h-100 text-center bg-light">
+                <div className="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+                <div className="product-device shadow-sm d-none d-md-block"></div>
+            </div>
+
+            <div className="card px-2 px-sm-5 py-5">
                 <div className="container">
                     <form onSubmit={handleFormSubmit} className="d-flex flex-column justify-content-center align-items-center gap-2">
                         <h1>Inicio de sesión</h1>
@@ -122,20 +132,20 @@ function Login() {
                         </label>
 
                         <label htmlFor="token">
-                            Token
+                            Token (Si lo tienes)
                             <input
                                 type="password"
                                 value={data.token}
                                 onChange={handleInputChange}
                                 name="token"
                                 id="token"
-                                placeholder="Si tienes, ingresa tu Token"
+                                placeholder="Ej: FFG3sf3dh5Jf7GhsZ"
                                 className="form-control"
                             />
                         </label>
 
                         {/* Si se estan enviando datos al servidor, se deshabilita el boton de ingresar y se muestra mensaje de espera */}
-                        <button disabled={data.isSubmitting} className="btn btn-outline-secondary mt-3">
+                        <button disabled={data.isSubmitting} className="btn btn-outline-primary mt-3">
                             {data.isSubmitting ? (
                                 "Espere..."
                             ) : (
@@ -148,11 +158,12 @@ function Login() {
                             <span className="form-error alert alert-danger">{data.errorMessage}</span>
                         )}
                     </form>
-                    <p className="switch-login-register-message mt-3 text-center">
+                    <p className="mt-3 text-center">
                         No tienes cuenta? <a href="/register">Regístrate</a>
                     </p>
                 </div>
             </div>
+            <a className="btn btn-secondary back-home-btn" href="/">Volver a Inicio <House /></a>
         </div>
     )
 }

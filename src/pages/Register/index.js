@@ -2,7 +2,9 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../App'
 
-import './style.css'
+import { House } from 'react-bootstrap-icons'
+
+import './style.scss'
 
 // Funcion que maneja la concatenacion de la url con la que se hacen peticiones la API
 import { apiUrl } from '../../utils/api-url'
@@ -91,7 +93,14 @@ function Register() {
 
     return (
         <div className="register-container d-flex flex-column justify-content-center align-items-center">
-            <div className="card p-5">
+
+            {/* Background */}
+            <div className="position-fixed overflow-hidden w-100 h-100 text-center bg-light">
+                <div className="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+                <div className="product-device shadow-sm d-none d-md-block"></div>
+            </div>
+
+            <div className="card px-2 px-sm-5 py-5">
                 <div className="container">
                     <form onSubmit={handleFormSubmit} className="d-flex flex-column justify-content-center align-items-center gap-2">
                         <h1>Regístrate</h1>
@@ -136,7 +145,7 @@ function Register() {
                         </label>
 
                         {/* Si se estan enviando datos al servidor, se deshabilita el boton de ingresar y se muestra mensaje de espera */}
-                        <button disabled={data.isSubmitting} className="btn btn-outline-secondary mt-3">
+                        <button disabled={data.isSubmitting} className="btn btn-outline-primary mt-3">
                             {data.isSubmitting ? (
                                 "Espere..."
                             ) : (
@@ -149,11 +158,12 @@ function Register() {
                             <span className="form-error alert alert-danger">{data.errorMessage}</span>
                         )}
                     </form>
-                    <p className="switch-login-register-message mt-3 text-center">
-                        Ya tienes tu cuenta? <a href="/login">Inicia sesión</a>
+                    <p className="mt-3 text-center">
+                        Ya tienes tu cuenta? <a href="/login">Iniciar sesión</a>
                     </p>
                 </div>
             </div>
+            <a className="btn btn-secondary back-home-btn" href="/">Volver a Inicio <House /></a>
         </div>
     )
 }
