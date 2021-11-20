@@ -1,5 +1,6 @@
 import React from 'react'
 import { AuthContext } from '../../../../App'
+import { Button } from 'react-bootstrap';
 
 function WelcomeSection() {
     // Acceso a la info de autenticacion, para saber si esta logueado o no, para mostrar un boton u otro
@@ -16,9 +17,9 @@ function WelcomeSection() {
 
                 {/* Si el usuario esta autenticado, se muestra un boton para ir a las tareas, si no, se muestra un boton para ir a login */}
                 {state.isAuthenticated ? (
-                    <a className="btn btn-outline-secondary" href="home">Ver mis tareas</a>
+                    <Button variant="outline-secondary" href="home">Ver mis tareas</Button>
                 ) : (
-                    <a className="btn btn-outline-secondary" href="login">Iniciar sesión</a>
+                    <Button variant="outline-secondary" href="login">Iniciar sesión</Button>
                 )}
             </div>
             <div className="product-device shadow-sm d-none d-md-block"></div>

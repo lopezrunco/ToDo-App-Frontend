@@ -20,10 +20,10 @@ function Card(props) {
     }
 
     return (
-        <div className={"me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden"} style={{ backgroundColor: props.backgroundColor }}>
+        <div className={" pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden"} style={{ backgroundColor: props.backgroundColor }}>
             <div className="my-3 py-3">
-                <h2 className={cardTitleClassNames}>Another headline</h2>
-                <p className={cardSubTitleClassNames}>And an even wittier subheading.</p>
+                <h2 className={cardTitleClassNames}>{props.title}</h2>
+                <p className={cardSubTitleClassNames}>{props.subtitle}</p>
             </div>
             <div className="shadow-sm mx-auto" style={cardImageStyle}></div>
         </div>
