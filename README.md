@@ -22,3 +22,6 @@ npm start
 # Compilar web para publicar en hosting
 npm run build
 ```
+
+### Mas info
+- [Firebase hosting](docs/firebase-hosting.md)
