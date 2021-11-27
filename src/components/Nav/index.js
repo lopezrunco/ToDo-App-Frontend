@@ -8,7 +8,7 @@ import NavLink from '../NavLink'
 import Button from 'react-bootstrap/Button'
 
 function Nav() {
-    const { dispatch } = React.useContext(AuthContext)
+    const { state: authState, dispatch } = React.useContext(AuthContext)
     const navigate = useNavigate()
 
     // Al clickear el boton de salir, se llama esta funcion
@@ -42,6 +42,17 @@ function Nav() {
                         <li className="nav-item">
                             <NavLink to="/prefs">Preferencias</NavLink>
                         </li>
+
+                        {/* Si el usuario logueado es ADMIN, se muestra el link */}
+                        {/* Si hay mas roles permitidos, se agregan al array y de esa forma amplia la busqueda */}
+                        {/* Este componente se puede usar en cualquier lugar, para mostrar algo dependiendo del rol del usuario logueado */}
+                        {
+                            ['ADMIN'].find(role => role === authState.role) &&
+                            <li className="nav-item">
+                                <NavLink to="/backoffice/users">Usuarios</NavLink>
+                            </li>
+                        }
+
                         <li className="nav-item">
                             {/* Uso de React Bootstrap */}
                             <Button variant="link" className="nav-link" onClick={logout}>Salir</Button>

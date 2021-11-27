@@ -13,6 +13,7 @@ import Stats from './pages/Stats'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Forbidden from './pages/Forbidden'
+import Users from './pages/backoffice/Users'
 
 // Componentes
 import Nav from './components/Nav'
@@ -23,10 +24,10 @@ export const AuthContext = React.createContext()
 // Estado inicial del contexto de auntenticacion
 // Refleja si el usuario esta auntenticado o no, y cuales son los datos del usuario
 const initialState = {
-  isAuthenticated: false,
-  user: null,
-  role: null,
-  token: null
+  isAuthenticated: !!localStorage.getItem('token'),
+  user: JSON.parse(localStorage.getItem('user')),
+  role: localStorage.getItem('role'),
+  token: localStorage.getItem('token')
 }
 
 // Reducer: elemento que recibe eventos del contexto y reacciona modificando el estado del componente
@@ -103,13 +104,42 @@ function App() {
       <div className="App">
 
         <Routes>
-          <Route path="/home" element={<RequireAuth><Nav /><Home /></RequireAuth>} />
-          <Route path="/stats" element={<RequireAuth><Nav /><Stats /></RequireAuth>} />
-          <Route path="/prefs" element={<RequireAuth><Nav /><Prefs /></RequireAuth>} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/forbidden" element={<Forbidden />} />
-          <Route path="/" element={<Landing />} />
+          <Route path="/home" element={
+            <RequireAuth>
+              <Nav />
+              <Home />
+            </RequireAuth>
+          } />
+          <Route path="/stats" element={
+            <RequireAuth>
+              <Nav />
+              <Stats />
+            </RequireAuth>
+          } />
+          <Route path="/prefs" element={
+            <RequireAuth>
+              <Nav />
+              <Prefs />
+            </RequireAuth>
+          } />
+          <Route path="/backoffice/users" element={
+            <RequireAuth allowedRoles={['ADMIN']}>
+              <Nav />
+              <Users />
+            </RequireAuth>
+          } />
+          <Route path="/login" element={
+            <Login />
+          } />
+          <Route path="/register" element={
+            <Register />
+          } />
+          <Route path="/forbidden" element={
+            <Forbidden />
+          } />
+          <Route path="/" element={
+            <Landing />
+          } />
         </Routes>
 
       </div>
