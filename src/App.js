@@ -2,6 +2,8 @@ import './App.scss'
 import React from 'react'
 // Cambio a version 6.0.2 de React roouter
 import { Routes, Route } from 'react-router-dom'
+// Componente para requerir autenticacion en determinadas rutas
+import RequireAuth from './components/RequireAuth'
 
 // Paginas
 import Home from './pages/Home'
@@ -101,9 +103,9 @@ function App() {
       <div className="App">
 
         <Routes>
-          <Route path="/stats" element={<div><Nav /><Stats /></div>} />
-          <Route path="/prefs" element={<div><Nav /><Prefs /></div>} />
-          <Route path="/home" element={<div><Nav /><Home /></div>} />
+          <Route path="/home" element={<RequireAuth><Nav /><Home /></RequireAuth>} />
+          <Route path="/stats" element={<RequireAuth><Nav /><Stats /></RequireAuth>} />
+          <Route path="/prefs" element={<RequireAuth><Nav /><Prefs /></RequireAuth>} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forbidden" element={<Forbidden />} />
@@ -114,6 +116,5 @@ function App() {
     </AuthContext.Provider>
   )
 }
-
 
 export default App
