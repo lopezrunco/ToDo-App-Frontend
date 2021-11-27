@@ -10,6 +10,7 @@ import Prefs from './pages/Prefs'
 import Stats from './pages/Stats'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import Forbidden from './pages/Forbidden'
 
 // Componentes
 import Nav from './components/Nav'
@@ -99,13 +100,13 @@ function App() {
     <AuthContext.Provider value={{ state, dispatch }}>
       <div className="App">
 
-        {/* Actualizacion a version 6.0.2 de React Router */}
         <Routes>
           <Route path="/stats" element={<div><Nav /><Stats /></div>} />
           <Route path="/prefs" element={<div><Nav /><Prefs /></div>} />
           <Route path="/home" element={<div><Nav /><Home /></div>} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/forbidden" element={<Forbidden />} />
           <Route path="/" element={<Landing />} />
         </Routes>
 

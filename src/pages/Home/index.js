@@ -5,6 +5,9 @@ import { AuthContext } from '../../App'
 import Card from './components/Card'
 import { apiUrl } from '../../utils/api-url'
 
+// Funcionalidad para navegar entre paginas de forma programatica (o sea sin que el usuario lo haga directamente)
+import { useNavigate } from 'react-router-dom'
+
 // Creacion de contexto de tareas
 export const TodoContext = React.createContext()
 
@@ -53,6 +56,8 @@ const reducer = (state, action) => {
 }
 
 function Home() {
+    // Acceder al useNavigate
+    const navigate = useNavigate()
     // Se usa el contexto de autenticacion para acceder al toquen con el que se solicitan las todos
     const { state: authState } = React.useContext(AuthContext)
     // Hook de reducer con el estado inicial
@@ -92,12 +97,21 @@ function Home() {
                     payload: data // Este data tiene los todos
                 })
             }).catch(error => {
-                console.error(error)
+                console.error('Error en el fetch de todos', error)
 
-                dispatch({
-                    // Si fallo, se emite dispatch de tipo failure
-                    type: 'FETCH_TODOS_FAILURE'
-                })
+                // Si da error al tratar de obtener las tareas, chequea que tipo de error es
+                if (error.status === 401) {
+                    // Si el estatus de error es 401, envia al usuario al login
+                    navigate('/login')
+                } else if (error.status === 403) {
+                    // Si el estatus de error es 403, envia al usuario a pagina de forbidden
+                    navigate('/forbidden')
+                } else {
+                    // Si no es ninguno de los anterios, se emite dispatch de tipo failure que muestra error en la interfaz
+                    dispatch({
+                        type: 'FETCH_TODOS_FAILURE'
+                    })
+                }
             })
         }
     }, [authState.token])   // El useEffect se volvera a disparar si el valor del token cambia
