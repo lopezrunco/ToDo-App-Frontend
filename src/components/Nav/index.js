@@ -2,6 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Check2Circle } from 'react-bootstrap-icons'
 import { AuthContext } from '../../App'
+import NavLink from '../NavLink'
 
 // Uso de React Bootstrap
 import Button from 'react-bootstrap/Button'
@@ -33,13 +34,13 @@ function Nav() {
                 <div className="navbar-collapse collapse" id="navbar-collapse">
                     <ul className="navbar-nav me-auto mb-2 mb-md-0">
                         <li className="nav-item">
-                            <a className="nav-link active" href="/home">Home</a>
+                            <NavLink to="/home">Home</NavLink>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/stats">Estadísticas</a>
+                            <NavLink to="/stats">Estadisticas</NavLink>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/prefs">Preferencias</a>
+                            <NavLink to="/prefs">Preferencias</NavLink>
                         </li>
                         <li className="nav-item">
                             {/* Uso de React Bootstrap */}
