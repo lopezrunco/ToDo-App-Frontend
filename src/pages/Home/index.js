@@ -4,6 +4,7 @@ import { Plus } from 'react-bootstrap-icons'
 import { AuthContext } from '../../App'
 import Card from './components/Card'
 import { apiUrl } from '../../utils/api-url'
+import { refreshToken } from '../../utils/refresh-token'
 
 // Funcionalidad para navegar entre paginas de forma programatica (o sea sin que el usuario lo haga directamente)
 import { useNavigate } from 'react-router-dom'
@@ -101,34 +102,15 @@ function Home() {
 
                 // Si da error 401, quiere decir que el token por algun motivo estaba mal
                 if (error.status === 401) {
-                    // Inovoca una peticion al endpoint de refresh
-                    // pasandole el refresh token 
-                    fetch(apiUrl('auth/refresh'), {
-                        headers: {
-                            'Authorization': authState.refreshToken,
-                            'Content-Type': 'application/json'
-                        },
-                    }).then(response => {
-                        // Si sale todo ok, responde con el json, si no, tira error
-                        if (response.ok) {
-                            return response.json()
-                        } else {
-                            throw response
-                        }
-                    }).then(response => {
-                        // Si sale todo ok, emite dispatch avisando al contexto de seguridad sobre el Refresh token
-                        // Dicho aviso llegara al reducer del app.js, que actualiza el local storage y el state con los nuevos valores
-                        // Al hacer dicha actualizacion se disparara nuevamente el useEffect
-                        authDispatch({
-                            type: 'REFRESH_TOKEN',
-                            payload: response
-                        })
-                    }).catch(error => {
-                        // En caso de error (que el token no se haya podido refrescar por cualquier razon)
-                        // se envia al usuario a la login page
-                        console.error(error)
-                        navigate('/login')
-                    })
+
+                    // Funcion utilitaria para refrescar el token
+                    refreshToken(
+                        authState.refreshToken,
+                        authDispatch,
+                        navigate,
+                        // Pasamos una funcion para ejecutar cuando el refresh salio OK
+                        () => {}
+                    )
 
                 } else if (error.status === 403) {
                     navigate('/forbidden')
