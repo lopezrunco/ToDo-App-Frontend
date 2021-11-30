@@ -22,3 +22,6 @@ firebase deploy
 # Alternativa en un solo comando (build + deploy)
 npm run deploy
 ```
+
+### Mas info
+- https://firebase.google.com/docs/hosting

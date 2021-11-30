@@ -25,3 +25,4 @@ npm run build
 
 ### Mas info
 - [Firebase hosting](docs/firebase-hosting.md)
+- [Netlify hosting](docs/netlify-hosting.md)
