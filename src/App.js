@@ -27,7 +27,8 @@ const initialState = {
   isAuthenticated: !!localStorage.getItem('token'),
   user: JSON.parse(localStorage.getItem('user')),
   role: localStorage.getItem('role'),
-  token: localStorage.getItem('token')
+  token: localStorage.getItem('token'),
+  refreshToken: localStorage.getItem('refreshToken')
 }
 
 // Reducer: elemento que recibe eventos del contexto y reacciona modificando el estado del componente
@@ -39,6 +40,7 @@ const reducer = (state, action) => {
       localStorage.setItem('user', JSON.stringify(action.payload.user))
       localStorage.setItem('role', action.payload.user.role)
       localStorage.setItem('token', action.payload.user.token)
+      localStorage.setItem('refreshToken', action.payload.user.refreshToken)
 
       // Se retorna un estado nuevo
       return {
@@ -46,7 +48,18 @@ const reducer = (state, action) => {
         isAuthenticated: true,
         user: action.payload.user,
         role: action.payload.user.role,
-        token: action.payload.user.token
+        token: action.payload.user.token,
+        refreshToken: action.payload.user.refreshToken
+      }
+    case 'REFRESH_TOKEN': 
+      // Case para el refresco del token
+      localStorage.setItem('token', action.payload.user.token)
+      localStorage.setItem('refreshToken', action.payload.user.refreshToken)
+
+      return {
+        ...state,
+        token: action.payload.user.token,
+        refreshToken: action.payload.user.refreshToken
       }
     case 'LOGOUT':
       // Limpia los valores del local storage
@@ -59,6 +72,7 @@ const reducer = (state, action) => {
         user: null,
         role: null,
         token: null,
+        refreshToken: null
       }
     default:
       // Si la accion no matchea ninguno de los casos, retorna el mismo estado

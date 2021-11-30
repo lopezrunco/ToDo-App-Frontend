@@ -59,7 +59,7 @@ function Home() {
     // Acceder al useNavigate
     const navigate = useNavigate()
     // Se usa el contexto de autenticacion para acceder al toquen con el que se solicitan las todos
-    const { state: authState } = React.useContext(AuthContext)
+    const { state: authState, dispatch: authDispatch } = React.useContext(AuthContext)
     // Hook de reducer con el estado inicial
     // Deja disponible el dispatch para avisar al reducer si se disparo una accion
     // Deja disponible el estado para usarlo en el componente para mostrar las todos
@@ -99,15 +99,40 @@ function Home() {
             }).catch(error => {
                 console.error('Error en el fetch de todos', error)
 
-                // Si da error al tratar de obtener las tareas, chequea que tipo de error es
+                // Si da error 401, quiere decir que el token por algun motivo estaba mal
                 if (error.status === 401) {
-                    // Si el estatus de error es 401, envia al usuario al login
-                    navigate('/login')
+                    // Inovoca una peticion al endpoint de refresh
+                    // pasandole el refresh token 
+                    fetch(apiUrl('auth/refresh'), {
+                        headers: {
+                            'Authorization': authState.refreshToken,
+                            'Content-Type': 'application/json'
+                        },
+                    }).then(response => {
+                        // Si sale todo ok, responde con el json, si no, tira error
+                        if (response.ok) {
+                            return response.json()
+                        } else {
+                            throw response
+                        }
+                    }).then(response => {
+                        // Si sale todo ok, emite dispatch avisando al contexto de seguridad sobre el Refresh token
+                        // Dicho aviso llegara al reducer del app.js, que actualiza el local storage y el state con los nuevos valores
+                        // Al hacer dicha actualizacion se disparara nuevamente el useEffect
+                        authDispatch({
+                            type: 'REFRESH_TOKEN',
+                            payload: response
+                        })
+                    }).catch(error => {
+                        // En caso de error (que el token no se haya podido refrescar por cualquier razon)
+                        // se envia al usuario a la login page
+                        console.error(error)
+                        navigate('/login')
+                    })
+
                 } else if (error.status === 403) {
-                    // Si el estatus de error es 403, envia al usuario a pagina de forbidden
                     navigate('/forbidden')
                 } else {
-                    // Si no es ninguno de los anterios, se emite dispatch de tipo failure que muestra error en la interfaz
                     dispatch({
                         type: 'FETCH_TODOS_FAILURE'
                     })
@@ -116,7 +141,7 @@ function Home() {
         }
     }, [authState.token, navigate])   // El useEffect se volvera a disparar si el valor de alguna de estas dependencias cambia
 
-    return ( 
+    return (
         <main className="page-home container mb-5">
             <div className="bg-light p-4 rounded">
                 <div className="input-group mb-4">
