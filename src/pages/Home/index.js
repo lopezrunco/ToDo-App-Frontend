@@ -114,7 +114,7 @@ function Home() {
                 }
             })
         }
-    }, [authState.token])   // El useEffect se volvera a disparar si el valor del token cambia
+    }, [authState.token, navigate])   // El useEffect se volvera a disparar si el valor de alguna de estas dependencias cambia
 
     return ( 
         <main className="page-home container mb-5">
