@@ -1,3 +1,5 @@
+import { apiUrl } from './api-url'
+
 export const refreshToken = (token, dispatch, navigate, callback) => {
     // Inovoca una peticion al endpoint de refresh
     // pasandole el refresh token 

@@ -24,9 +24,9 @@ function Card(props) {
                     >
                         {/* Ternario para cambiar el icono dependiendo de si la tarea esta completa o no */}
                         {props.todo.completed ? (
-                            <Circle color="white" />
-                        ) : (
                             <CircleFill color="white" />
+                            ) : (
+                            <Circle color="white" />
                         )}
                     </button>
 

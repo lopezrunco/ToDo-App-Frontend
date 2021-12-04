@@ -52,14 +52,13 @@ const reducer = (state, action) => {
         refreshToken: action.payload.user.refreshToken
       }
     case 'REFRESH_TOKEN': 
-      // Case para el refresco del token
-      localStorage.setItem('token', action.payload.user.token)
-      localStorage.setItem('refreshToken', action.payload.user.refreshToken)
+        localStorage.setItem('token', action.payload.token)
+        localStorage.setItem('refreshToken', action.payload.refreshToken)
 
       return {
         ...state,
-        token: action.payload.user.token,
-        refreshToken: action.payload.user.refreshToken
+        token: action.payload.token,
+        refreshToken: action.payload.refreshToken
       }
     case 'LOGOUT':
       // Limpia los valores del local storage
