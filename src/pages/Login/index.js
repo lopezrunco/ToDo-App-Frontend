@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../App'
 
 // Funcion que maneja la concatenacion de la url con la que se hacen peticiones la API
@@ -38,9 +38,6 @@ function Login() {
     // Funcion que envia los datos a la API
     const handleFormSubmit = event => {
         
-        // Evita que el formulario redireccione
-        event.preventDefault()
-
         // Setea isSubmitting en verdadero para que deshabilite el boton de envio
         // Setea errorMessage en nulo para que no se muestren mensajes de error durante la peticion (a nivel visual para no confundir al usuario)
         setData({
@@ -91,7 +88,7 @@ function Login() {
         <div className="login-container">
             <div className="card">
                 <div className="container">
-                    <form onSubmit={handleFormSubmit}>
+                    <form>
                         <h1>Inicio de sesión</h1>
 
                         <label htmlFor="email">
@@ -128,7 +125,7 @@ function Login() {
                         </label>
 
                         {/* Si se estan enviando datos al servidor, se deshabilita el boton de ingresar y se muestra mensaje de espera */}
-                        <button disabled={data.isSubmitting}>
+                        <button onClick={handleFormSubmit} disabled={data.isSubmitting}>
                             {data.isSubmitting ? (
                                 "Espere..."
                             ) : (
@@ -141,6 +138,10 @@ function Login() {
                             <span className="form-error">{data.errorMessage}</span>
                         )}
                     </form>
+                    <br />
+                    <Link to="/register">Registrarse</Link>
+                    <br />
+                    <Link to="/">Volver a landing</Link>
                 </div>
             </div>
         </div>
