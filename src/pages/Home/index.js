@@ -107,9 +107,7 @@ function Home() {
                     refreshToken(
                         authState.refreshToken,
                         authDispatch,
-                        navigate,
-                        // Pasamos una funcion para ejecutar cuando el refresh salio OK
-                        () => {}
+                        navigate
                     )
 
                 } else if (error.status === 403) {
@@ -172,7 +170,7 @@ function Home() {
 
             <button
                 className="fab fab-fixed d-flex justify-content-center align-items-center bg-success"
-                onClick={() => console.log('Open todo creator')}
+                onClick={() => navigate('/todos/create')}
             >
                 <Plus color="white" size={30} />
             </button>

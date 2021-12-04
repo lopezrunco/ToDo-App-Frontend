@@ -1,8 +1,6 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../App'
-
-// Funcion que maneja la concatenacion de la url con la que se hacen peticiones la API
 import { apiUrl } from '../../utils/api-url'
 
 function Register() {
@@ -36,7 +34,7 @@ function Register() {
     }
 
     // Funcion que envia los datos a la API
-    const handleFormSubmit = event => {
+    const handleFormSubmit = () => {
 
         // Setea isSubmitting en verdadero para que deshabilite el boton de envio
         // Setea errorMessage en nulo para que no se muestren mensajes de error durante la peticion (a nivel visual para no confundir al usuario)

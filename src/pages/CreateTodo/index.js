@@ -1,17 +1,12 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../App'
-
-// Funcion que maneja la concatenacion de la url con la que se hacen peticiones la API
 import { apiUrl } from '../../utils/api-url'
+import { refreshToken } from '../../utils/refresh-token'
+import './style.scss'
 
-function Login() {
-
-    // Del contexto de autenticacion tomamos la funcion dispatch para indicar si ocurrio algun login
-    const { dispatch } = React.useContext(AuthContext)
-
-    // Funcionaidad de react router 6.0.2 para navegar de forma sencilla 
-    // (Basicamente es una funcion que recibe un string que es la ruta)
+function CreateTodo() {
+    const { state: authState, dispatch: authDispatch } = React.useContext(AuthContext)
     const navigate = useNavigate()
 
     // Declaracion del estado inicial del usuario (todo vacio)
@@ -36,8 +31,8 @@ function Login() {
     }
 
     // Funcion que envia los datos a la API
-    const handleFormSubmit = () => {
-        
+    const handleFormSubmit = event => {
+
         // Setea isSubmitting en verdadero para que deshabilite el boton de envio
         // Setea errorMessage en nulo para que no se muestren mensajes de error durante la peticion (a nivel visual para no confundir al usuario)
         setData({
@@ -46,11 +41,11 @@ function Login() {
             errorMessage: null
         })
 
-        // Llamada al endpoint de login
-        fetch(apiUrl('login'), {
+        // Llamada al endpoint de todos
+        fetch(apiUrl('todos'), {
             method: 'post',
             headers: {
-                // Declara que tipo de contenido se le envia al backend, otra opcion podria ser XML
+                'Authorization': authState.token,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
@@ -65,27 +60,34 @@ function Login() {
                 throw response
             }
         }).then(data => {
-            // Si todo se ejecuto OK, hace un dispatch de login con los datos que vienen de la API
-            dispatch({
-                type: 'LOGIN',
-                payload: data
-            })
-
-            // Luego de hacer el dispatch, navega a home
             navigate('/home')
         }).catch(error => {
-            console.error(error)
+            console.error('Error en crear todo', error)
 
-            setData({
-                ...data,
-                isSubmitting: false,
-                errorMessage: 'Credenciales invalidas'
-            })
+            // Si da error 401, quiere decir que el token por algun motivo estaba mal
+            if (error.status === 401) {
+
+                // Funcion utilitaria para refrescar el token
+                refreshToken(
+                    authState.refreshToken,
+                    authDispatch,
+                    navigate,
+                    () => handleFormSubmit()    // Si el refresh sale bien, intenta nuevamente hacer la peticion
+                )
+            } else if (error.status === 403) {
+                navigate('/forbidden')
+            } else {
+                setData({
+                    ...data,
+                    isSubmitting: false,
+                    errorMessage: error
+                })
+            }
         })
     }
 
     return (
-        <div className="login-container">
+        <div className="create-todo container">
             <div className="card">
                 <div className="container">
                     <form>
@@ -124,7 +126,7 @@ function Login() {
                             />
                         </label>
 
-                        {/* Si se estan enviando datos al servidor, se deshabilita el boton de ingresar y se muestra mensaje de espera */}
+                        {/* Si se estan enviando datos al servidor, se deshabilita el boton y se muestra mensaje de espera */}
                         <button onClick={handleFormSubmit} disabled={data.isSubmitting}>
                             {data.isSubmitting ? (
                                 "Espere..."
@@ -148,4 +150,4 @@ function Login() {
     )
 }
 
-export default Login
+export default CreateTodo

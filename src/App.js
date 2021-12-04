@@ -2,11 +2,10 @@ import './App.scss'
 import React from 'react'
 // Cambio a version 6.0.2 de React roouter
 import { Routes, Route } from 'react-router-dom'
-// Componente para requerir autenticacion en determinadas rutas
-import RequireAuth from './components/RequireAuth'
 
 // Paginas
 import Home from './pages/Home'
+import CreateTodo from './pages/CreateTodo'
 import Landing from './pages/Landing'
 import Prefs from './pages/Prefs'
 import Stats from './pages/Stats'
@@ -17,6 +16,8 @@ import Users from './pages/backoffice/Users'
 
 // Componentes
 import Nav from './components/Nav'
+// Componente para requerir autenticacion en determinadas rutas
+import RequireAuth from './components/RequireAuth'
 
 // Creacion de contexto de autenticacion (Se crean contextos para manejos de datos diferentes entre si)
 export const AuthContext = React.createContext()
@@ -117,42 +118,58 @@ function App() {
       <div className="App">
 
         <Routes>
+
           <Route path="/home" element={
             <RequireAuth>
               <Nav />
               <Home />
             </RequireAuth>
           } />
+
+          <Route path="/todos/create" element={
+            <RequireAuth>
+              <Nav />
+              <CreateTodo />
+            </RequireAuth>
+          } />
+
           <Route path="/stats" element={
             <RequireAuth>
               <Nav />
               <Stats />
             </RequireAuth>
           } />
+
           <Route path="/prefs" element={
             <RequireAuth>
               <Nav />
               <Prefs />
             </RequireAuth>
           } />
+
           <Route path="/backoffice/users" element={
             <RequireAuth allowedRoles={['ADMIN']}>
               <Nav />
               <Users />
             </RequireAuth>
           } />
+
           <Route path="/login" element={
             <Login />
           } />
+
           <Route path="/register" element={
             <Register />
           } />
+
           <Route path="/forbidden" element={
             <Forbidden />
           } />
+
           <Route path="/" element={
             <Landing />
           } />
+
         </Routes>
 
       </div>
