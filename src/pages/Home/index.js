@@ -1,13 +1,14 @@
 import './style.scss'
-import React, { useContext, useEffect, useReducer } from 'react'
+import React, { useContext, useEffect, useReducer, createContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Plus } from 'react-bootstrap-icons'
 import { AuthContext } from '../../App'
 import { apiUrl } from '../../utils/api-url'
 import { refreshToken } from '../../utils/refresh-token'
 import Card from './components/Card'
 
-// Funcionalidad para navegar entre paginas de forma programatica (o sea sin que el usuario lo haga directamente)
-import { useNavigate } from 'react-router-dom'
+// Creacion de contexto para las todos. Se lo expone para que puedas ser usado en otros componentes
+export const TodosContext = createContext()
 
 // Creacion de elemento con filtros de categorias
 // La funcion freeze() congela los valores para que sean solo de lectura y no se modifiquen
@@ -81,7 +82,7 @@ function Home() {
                 headers: {
                     'Authorization': authState.token, // Importante pasar el token
                     'Content-Type': 'application/json'
-                },
+                }
             }).then(response => {
                 if (response.ok) {
                     return response.json()
