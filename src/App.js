@@ -1,6 +1,5 @@
 import './App.scss'
 import React from 'react'
-// Cambio a version 6.0.2 de React roouter
 import { Routes, Route } from 'react-router-dom'
 
 // Paginas
@@ -12,6 +11,7 @@ import Stats from './pages/Stats'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Forbidden from './pages/Forbidden'
+import NotFound from './pages/NotFound'
 import Users from './pages/backoffice/Users'
 
 // Componentes
@@ -168,6 +168,10 @@ function App() {
 
           <Route path="/" element={
             <Landing />
+          } />
+
+          <Route path="*" element={
+            <NotFound />
           } />
 
         </Routes>
