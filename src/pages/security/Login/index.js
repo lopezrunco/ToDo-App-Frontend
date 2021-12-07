@@ -1,9 +1,11 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { AuthContext } from '../../App'
-import { apiUrl } from '../../utils/api-url'
+import { AuthContext } from '../../../App'
 
-function Register() {
+// Funcion que maneja la concatenacion de la url con la que se hacen peticiones la API
+import { apiUrl } from '../../../utils/api-url'
+
+function Login() {
 
     // Del contexto de autenticacion tomamos la funcion dispatch para indicar si ocurrio algun login
     const { dispatch } = React.useContext(AuthContext)
@@ -14,9 +16,9 @@ function Register() {
 
     // Declaracion del estado inicial del usuario (todo vacio)
     const initialState = {
-        name: '',
         email: '',
         password: '',
+        token: '',
         isSubmitting: false, // Indica si estan enviando datos o no, y de esa manera manejarlo en la UI
         errorMessage: null
     }
@@ -35,7 +37,7 @@ function Register() {
 
     // Funcion que envia los datos a la API
     const handleFormSubmit = () => {
-
+        
         // Setea isSubmitting en verdadero para que deshabilite el boton de envio
         // Setea errorMessage en nulo para que no se muestren mensajes de error durante la peticion (a nivel visual para no confundir al usuario)
         setData({
@@ -45,16 +47,16 @@ function Register() {
         })
 
         // Llamada al endpoint de login
-        fetch(apiUrl('register'), {
+        fetch(apiUrl('login'), {
             method: 'post',
             headers: {
                 // Declara que tipo de contenido se le envia al backend, otra opcion podria ser XML
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                name: data.name,
                 email: data.email,
-                password: data.password
+                password: data.password,
+                token: data.token
             })
         }).then(response => {
             if (response.ok) {
@@ -87,18 +89,7 @@ function Register() {
             <div className="card">
                 <div className="container">
                     <form>
-                        <h1>Registro de nueva cuenta</h1>
-
-                        <label htmlFor="name">
-                            Nombre
-                            <input
-                                type="text"
-                                value={data.name}
-                                onChange={handleInputChange}
-                                name="name"
-                                id="name"
-                            />
-                        </label>
+                        <h1>Inicio de sesión</h1>
 
                         <label htmlFor="email">
                             Email
@@ -122,6 +113,17 @@ function Register() {
                             />
                         </label>
 
+                        <label htmlFor="token">
+                            Token
+                            <input
+                                type="password"
+                                value={data.token}
+                                onChange={handleInputChange}
+                                name="token"
+                                id="token"
+                            />
+                        </label>
+
                         {/* Si se estan enviando datos al servidor, se deshabilita el boton de ingresar y se muestra mensaje de espera */}
                         <button onClick={handleFormSubmit} disabled={data.isSubmitting}>
                             {data.isSubmitting ? (
@@ -137,7 +139,7 @@ function Register() {
                         )}
                     </form>
                     <br />
-                    <Link to="/login">Iniciar sesion</Link>
+                    <Link to="/register">Registrarse</Link>
                     <br />
                     <Link to="/">Volver a landing</Link>
                 </div>
@@ -146,4 +148,4 @@ function Register() {
     )
 }
 
-export default Register
+export default Login

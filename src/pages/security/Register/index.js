@@ -1,19 +1,22 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { AuthContext } from '../../App'
-import { apiUrl } from '../../utils/api-url'
-import { refreshToken } from '../../utils/refresh-token'
-import './style.scss'
+import { AuthContext } from '../../../App'
+import { apiUrl } from '../../../utils/api-url'
 
-function CreateTodo() {
-    const { state: authState, dispatch: authDispatch } = React.useContext(AuthContext)
+function Register() {
+
+    // Del contexto de autenticacion tomamos la funcion dispatch para indicar si ocurrio algun login
+    const { dispatch } = React.useContext(AuthContext)
+
+    // Funcionaidad de react router 6.0.2 para navegar de forma sencilla 
+    // (Basicamente es una funcion que recibe un string que es la ruta)
     const navigate = useNavigate()
 
     // Declaracion del estado inicial del usuario (todo vacio)
     const initialState = {
+        name: '',
         email: '',
         password: '',
-        token: '',
         isSubmitting: false, // Indica si estan enviando datos o no, y de esa manera manejarlo en la UI
         errorMessage: null
     }
@@ -31,7 +34,7 @@ function CreateTodo() {
     }
 
     // Funcion que envia los datos a la API
-    const handleFormSubmit = event => {
+    const handleFormSubmit = () => {
 
         // Setea isSubmitting en verdadero para que deshabilite el boton de envio
         // Setea errorMessage en nulo para que no se muestren mensajes de error durante la peticion (a nivel visual para no confundir al usuario)
@@ -41,17 +44,17 @@ function CreateTodo() {
             errorMessage: null
         })
 
-        // Llamada al endpoint de todos
-        fetch(apiUrl('todos'), {
+        // Llamada al endpoint de login
+        fetch(apiUrl('register'), {
             method: 'post',
             headers: {
-                'Authorization': authState.token,
+                // Declara que tipo de contenido se le envia al backend, otra opcion podria ser XML
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
+                name: data.name,
                 email: data.email,
-                password: data.password,
-                token: data.token
+                password: data.password
             })
         }).then(response => {
             if (response.ok) {
@@ -60,38 +63,42 @@ function CreateTodo() {
                 throw response
             }
         }).then(data => {
+            // Si todo se ejecuto OK, hace un dispatch de login con los datos que vienen de la API
+            dispatch({
+                type: 'LOGIN',
+                payload: data
+            })
+
+            // Luego de hacer el dispatch, navega a home
             navigate('/home')
         }).catch(error => {
-            console.error('Error en crear todo', error)
+            console.error(error)
 
-            // Si da error 401, quiere decir que el token por algun motivo estaba mal
-            if (error.status === 401) {
-
-                // Funcion utilitaria para refrescar el token
-                refreshToken(
-                    authState.refreshToken,
-                    authDispatch,
-                    navigate,
-                    () => handleFormSubmit()    // Si el refresh sale bien, intenta nuevamente hacer la peticion
-                )
-            } else if (error.status === 403) {
-                navigate('/forbidden')
-            } else {
-                setData({
-                    ...data,
-                    isSubmitting: false,
-                    errorMessage: error
-                })
-            }
+            setData({
+                ...data,
+                isSubmitting: false,
+                errorMessage: 'Credenciales invalidas'
+            })
         })
     }
 
     return (
-        <div className="create-todo container">
+        <div className="login-container">
             <div className="card">
                 <div className="container">
                     <form>
-                        <h1>Inicio de sesión</h1>
+                        <h1>Registro de nueva cuenta</h1>
+
+                        <label htmlFor="name">
+                            Nombre
+                            <input
+                                type="text"
+                                value={data.name}
+                                onChange={handleInputChange}
+                                name="name"
+                                id="name"
+                            />
+                        </label>
 
                         <label htmlFor="email">
                             Email
@@ -115,18 +122,7 @@ function CreateTodo() {
                             />
                         </label>
 
-                        <label htmlFor="token">
-                            Token
-                            <input
-                                type="password"
-                                value={data.token}
-                                onChange={handleInputChange}
-                                name="token"
-                                id="token"
-                            />
-                        </label>
-
-                        {/* Si se estan enviando datos al servidor, se deshabilita el boton y se muestra mensaje de espera */}
+                        {/* Si se estan enviando datos al servidor, se deshabilita el boton de ingresar y se muestra mensaje de espera */}
                         <button onClick={handleFormSubmit} disabled={data.isSubmitting}>
                             {data.isSubmitting ? (
                                 "Espere..."
@@ -141,7 +137,7 @@ function CreateTodo() {
                         )}
                     </form>
                     <br />
-                    <Link to="/register">Registrarse</Link>
+                    <Link to="/login">Iniciar sesion</Link>
                     <br />
                     <Link to="/">Volver a landing</Link>
                 </div>
@@ -150,4 +146,4 @@ function CreateTodo() {
     )
 }
 
-export default CreateTodo
+export default Register

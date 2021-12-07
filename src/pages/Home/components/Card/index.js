@@ -1,10 +1,16 @@
 import './style.scss'
 import { Eye, Trash, Circle, CircleFill } from 'react-bootstrap-icons'
+import { useNavigate } from 'react-router'
 
 function Card(props) {
+    const navigate = useNavigate()
+
     const toggleTodoCompletion = () => {}
 
-    const viewTodo = () => {}
+    const viewTodo = () => {
+        // Al hacer click en el boton de ver, toma el id de la tarea y abre la viewTodo page con dicha tarea
+        navigate(`/todos/${props.todo.id}`)
+    }
 
     const deleteTodo = () => {}
 

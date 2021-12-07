@@ -1,5 +1,5 @@
 import './style.scss'
-import React from 'react'
+import React, { useContext, useEffect, useReducer, createContext } from 'react'
 import { Plus } from 'react-bootstrap-icons'
 import { AuthContext } from '../../App'
 import Card from './components/Card'
@@ -10,7 +10,7 @@ import { refreshToken } from '../../utils/refresh-token'
 import { useNavigate } from 'react-router-dom'
 
 // Creacion de contexto de tareas
-export const TodoContext = React.createContext()
+export const TodoContext = createContext()
 
 // Creacion de elemento con filtros de categorias
 // La funcion freeze() congela los valores para que sean solo de lectura y no se modifiquen
@@ -60,18 +60,18 @@ function Home() {
     // Acceder al useNavigate
     const navigate = useNavigate()
     // Se usa el contexto de autenticacion para acceder al toquen con el que se solicitan las todos
-    const { state: authState, dispatch: authDispatch } = React.useContext(AuthContext)
+    const { state: authState, dispatch: authDispatch } = useContext(AuthContext)
     // Hook de reducer con el estado inicial
     // Deja disponible el dispatch para avisar al reducer si se disparo una accion
     // Deja disponible el estado para usarlo en el componente para mostrar las todos
-    const [state, dispatch] = React.useReducer(reducer, initialState)
+    const [state, dispatch] = useReducer(reducer, initialState)
 
     const search = () => { }
 
     const applyFilter = () => { }
 
     // Cuando se carga el componente obtiene los todos y los muestra (o al menos la primer pagina)
-    React.useEffect(() => {
+    useEffect(() => {
 
         // Si tiene token se hace la peticion de todos
         if (authState.token) {

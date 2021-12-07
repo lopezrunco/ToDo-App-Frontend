@@ -1,17 +1,18 @@
 import './App.scss'
-import React from 'react'
+import React, { createContext, useReducer } from 'react'
 import { Routes, Route } from 'react-router-dom'
 
 // Paginas
 import Home from './pages/Home'
-import CreateTodo from './pages/CreateTodo'
+import CreateTodo from './pages/todos/CreateTodo'
+import ViewTodo from './pages/todos/ViewTodo'
 import Landing from './pages/Landing'
 import Prefs from './pages/Prefs'
 import Stats from './pages/Stats'
-import Login from './pages/Login'
-import Register from './pages/Register'
-import Forbidden from './pages/Forbidden'
-import NotFound from './pages/NotFound'
+import Login from './pages/security/Login'
+import Register from './pages/security/Register'
+import Forbidden from './pages/access/Forbidden'
+import NotFound from './pages/access/NotFound'
 import Users from './pages/backoffice/Users'
 
 // Componentes
@@ -20,7 +21,7 @@ import Nav from './components/Nav'
 import RequireAuth from './components/RequireAuth'
 
 // Creacion de contexto de autenticacion (Se crean contextos para manejos de datos diferentes entre si)
-export const AuthContext = React.createContext()
+export const AuthContext = createContext()
 
 // Estado inicial del contexto de auntenticacion
 // Refleja si el usuario esta auntenticado o no, y cuales son los datos del usuario
@@ -86,7 +87,7 @@ function App() {
   // Deja disponible:
   // - El estado que sera manejado por el reducer
   // - El dispatch (funcion usada para el envio y recepcion de eventos)
-  const [state, dispatch] = React.useReducer(reducer, initialState)
+  const [state, dispatch] = useReducer(reducer, initialState)
 
   // Hook useEffect: Restablece el estado de la app cada vez que carga por primera vez
   // UseEffect se utiliza para disparar comportamientos que no bloqueen el rendering de la app
@@ -123,6 +124,13 @@ function App() {
             <RequireAuth>
               <Nav />
               <Home />
+            </RequireAuth>
+          } />
+
+          <Route path="/todos/:id" element={
+            <RequireAuth>
+              <Nav />
+              <ViewTodo />
             </RequireAuth>
           } />
 

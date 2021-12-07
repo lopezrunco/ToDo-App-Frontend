@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import { AuthContext } from "../../App"
+import { AuthContext } from "../../../App"
 
 function NotFound() {
     const { state: authState } = React.useContext(AuthContext)
