@@ -1,44 +1,72 @@
-import React from 'react'
+import React, { useReducer } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../../App'
 import { apiUrl } from '../../../utils/api-url'
 import { refreshToken } from '../../../utils/refresh-token'
 import './style.scss'
 
+// Declaracion del estado inicial del usuario (todo vacio)
+const initialState = {
+    email: '',
+    password: '',
+    token: '',
+    isSending: false,
+    hasError: false
+}
+
+const reducer = (state, action) => {
+    switch (action.type) {
+        // Modifica el estado al cambiar el estado del input
+        case 'FORM_INPUT_CHANGE':
+            return {
+                ...state,
+                // De forma dinamica, cambiara de un input puntual el valor que se le pase como parametro
+                [action.payload.input]:  action.payload.value
+            }
+        case 'CREATE_TODO_REQUEST':
+            return {
+                ...state,
+                isSending: true,
+                hasError: false
+            }
+        case 'CREATE_TODO_SUCCESS':
+            return {
+                ...state,
+                isSending: false,
+                todo: action.payload.todo
+            }
+        case 'CREATE_TODO_FAILURE':
+            return {
+                ...state,
+                isSending: false,
+                hasError: true
+            }
+        default:
+            return state
+    }
+}
+
 function CreateTodo() {
+    const [state, dispatch] = useReducer(reducer, initialState)
     const { state: authState, dispatch: authDispatch } = React.useContext(AuthContext)
     const navigate = useNavigate()
 
-    // Declaracion del estado inicial del usuario (todo vacio)
-    const initialState = {
-        email: '',
-        password: '',
-        token: '',
-        isSubmitting: false, // Indica si estan enviando datos o no, y de esa manera manejarlo en la UI
-        errorMessage: null
-    }
-
-    // Seteo del estado inicial
-    const [data, setData] = React.useState(initialState)
-
-    // Funcion que actualiza todos los datos del estado de una sola vez (sin necesidad de hacerlo uno a uno)
     // Esta funcion se invoca en el onChange de los inputs
-    const handleInputChange = event => {
-        setData({
-            ...data,
-            [event.target.name]: event.target.value
-        })
+    const handleInputChange = (event) => {
+        // Emision de dispatch que toma los valores del evento del formulario
+        dispatch({
+            type: 'FORM_INPUT_CHANGE',
+            payload: {
+                input: event.target.name,
+                value: event.target.value
+            }
+        })        
     }
 
     // Funcion que envia los datos a la API
-    const handleFormSubmit = event => {
-
-        // Setea isSubmitting en verdadero para que deshabilite el boton de envio
-        // Setea errorMessage en nulo para que no se muestren mensajes de error durante la peticion (a nivel visual para no confundir al usuario)
-        setData({
-            ...data,
-            isSubmitting: true,
-            errorMessage: null
+    const handleFormSubmit = () => {
+        dispatch({
+            type: 'CREATE_TODO_REQUEST'
         })
 
         // Llamada al endpoint de todos
@@ -49,9 +77,9 @@ function CreateTodo() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                email: data.email,
-                password: data.password,
-                token: data.token
+                email: state.email,
+                password: state.password,
+                token: state.token
             })
         }).then(response => {
             if (response.ok) {
@@ -59,7 +87,12 @@ function CreateTodo() {
             } else {
                 throw response
             }
-        }).then(data => {
+        }).then(state => {
+            dispatch({
+                type: 'CREATE_TODO_SUCCESS',
+                payload: state
+            })
+
             navigate('/home')
         }).catch(error => {
             console.error('Error en crear todo', error)
@@ -77,10 +110,8 @@ function CreateTodo() {
             } else if (error.status === 403) {
                 navigate('/forbidden')
             } else {
-                setData({
-                    ...data,
-                    isSubmitting: false,
-                    errorMessage: error
+                dispatch({
+                    type: 'CREATE_TODO_FAILURE'
                 })
             }
         })
@@ -97,7 +128,7 @@ function CreateTodo() {
                             Email
                             <input
                                 type="text"
-                                value={data.email}
+                                value={state.email}
                                 onChange={handleInputChange}
                                 name="email"
                                 id="email"
@@ -108,7 +139,7 @@ function CreateTodo() {
                             Contraseña
                             <input
                                 type="password"
-                                value={data.password}
+                                value={state.password}
                                 onChange={handleInputChange}
                                 name="password"
                                 id="password"
@@ -119,7 +150,7 @@ function CreateTodo() {
                             Token
                             <input
                                 type="password"
-                                value={data.token}
+                                value={state.token}
                                 onChange={handleInputChange}
                                 name="token"
                                 id="token"
@@ -127,8 +158,8 @@ function CreateTodo() {
                         </label>
 
                         {/* Si se estan enviando datos al servidor, se deshabilita el boton y se muestra mensaje de espera */}
-                        <button onClick={handleFormSubmit} disabled={data.isSubmitting}>
-                            {data.isSubmitting ? (
+                        <button onClick={handleFormSubmit} disabled={state.isSubmitting}>
+                            {state.isSubmitting ? (
                                 "Espere..."
                             ) : (
                                 "Ingresar"
@@ -136,8 +167,8 @@ function CreateTodo() {
                         </button>
 
                         {/* Si hay mensajes de error, se muestran */}
-                        {data.errorMessage && (
-                            <span className="form-error">{data.errorMessage}</span>
+                        {state.errorMessage && (
+                            <span className="form-error">{state.errorMessage}</span>
                         )}
                     </form>
                     <br />

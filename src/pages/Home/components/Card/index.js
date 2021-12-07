@@ -2,14 +2,14 @@ import './style.scss'
 import { Eye, Trash, Circle, CircleFill } from 'react-bootstrap-icons'
 import { useNavigate } from 'react-router'
 
-function Card(props) {
+function Card({ todo }) {
     const navigate = useNavigate()
 
     const toggleTodoCompletion = () => {}
 
     const viewTodo = () => {
         // Al hacer click en el boton de ver, toma el id de la tarea y abre la viewTodo page con dicha tarea
-        navigate(`/todos/${props.todo.id}`)
+        navigate(`/todos/${ todo.id }`)
     }
 
     const deleteTodo = () => {}
@@ -18,8 +18,8 @@ function Card(props) {
         <div className="todo-card col">
             <div className="card">
                 <div className="card-body">
-                    <h4 className="card-title">{ props.todo.title }</h4>
-                    <p className="card-text">{ props.todo.description }</p>
+                    <h4 className="card-title">{ todo.title }</h4>
+                    <p className="card-text">{ todo.description }</p>
                 </div>
 
                 <div className="card-floating-actions d-flex">
@@ -29,7 +29,7 @@ function Card(props) {
                         onClick={toggleTodoCompletion}
                     >
                         {/* Ternario para cambiar el icono dependiendo de si la tarea esta completa o no */}
-                        {props.todo.completed ? (
+                        {todo.completed ? (
                             <CircleFill color="white" />
                             ) : (
                             <Circle color="white" />
