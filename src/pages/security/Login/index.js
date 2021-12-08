@@ -1,5 +1,6 @@
-import React, { useReducer } from 'react'
+import React, { useReducer, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { AuthContext } from '../../../App'
 import { apiUrl } from '../../../utils/api-url'
 
 const initialState = {
@@ -17,33 +18,19 @@ const reducer = (state, action) => {
                 ...state,
                 [action.payload.input]:  action.payload.value
             }
-        case 'LOGIN_REQUEST':
-            return {
-                ...state,
-                isSubmitting: true,
-                hasError: false
-            }
-        case 'LOGIN_SUCCESS':
-            return {
-                ...state,
-                isSubmitting: false,
-                user: action.payload.user
-            }
-        case 'LOGIN_FAILURE':
-            return {
-                ...state,
-                isSubmitting: false,
-                hasError: true
-            }
         default:
             return state
     }
 }
 
 function Login() {
+    // Uso del reducer de este archivo
     const [state, dispatch] = useReducer(reducer, initialState)
+
+
     const navigate = useNavigate()
 
+    // De forma dinamica toma los valores de los inputs
     const handleInputChange = event => {
         dispatch({
             type: 'FORM_INPUT_CHANGE',
@@ -56,10 +43,6 @@ function Login() {
 
     // Funcion que envia los datos a la API
     const handleFormSubmit = () => {
-        dispatch({
-            type: 'LOGIN_REQUEST'
-        })
-
         fetch(apiUrl('login'), {
             method: 'post',
             headers: {
@@ -78,15 +61,13 @@ function Login() {
             }
         }).then(data => {
             dispatch({
-                type: 'LOGIN_SUCCESS',
+                type: 'LOGIN',
                 payload: data
             })
             navigate('/home')
 
         }).catch(error => {
-            dispatch({
-                type: 'LOGIN_FAILURE'
-            })
+            alert('Error al hacer login', error)
         })
     }
 
