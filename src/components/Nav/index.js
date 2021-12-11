@@ -6,6 +6,7 @@ import NavLink from '../NavLink'
 
 // Uso de React Bootstrap
 import Button from 'react-bootstrap/Button'
+import { LOGOUT } from '../../action-types'
 
 function Nav() {
     const { state: authState, dispatch } = React.useContext(AuthContext)
@@ -15,7 +16,7 @@ function Nav() {
     // que emite un dispatch de tipo logout y luego navega a la landing
     // Ese dispatch emitido se toma en el app.js, que limpia el localstorage y resetea el estado de autenticacion del usuario 
     const logout = () => {
-        dispatch({ type: 'LOGOUT' })
+        dispatch({ type: LOGOUT })
         navigate('/')
     }
 

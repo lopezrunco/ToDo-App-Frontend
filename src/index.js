@@ -1,5 +1,6 @@
 // Impotacion de tema de Bootswatch
 import 'bootswatch/dist/minty/bootstrap.min.css'
+import 'react-loading-skeleton/dist/skeleton.css'
 import { BrowserRouter } from 'react-router-dom'
 import React from 'react'
 import ReactDOM from 'react-dom'

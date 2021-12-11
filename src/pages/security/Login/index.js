@@ -1,8 +1,7 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { LOGIN } from '../../../action-types'
 import { AuthContext } from '../../../App'
-
-// Funcion que maneja la concatenacion de la url con la que se hacen peticiones la API
 import { apiUrl } from '../../../utils/api-url'
 
 function Login() {
@@ -37,7 +36,7 @@ function Login() {
 
     // Funcion que envia los datos a la API
     const handleFormSubmit = () => {
-        
+
         // Setea isSubmitting en verdadero para que deshabilite el boton de envio
         // Setea errorMessage en nulo para que no se muestren mensajes de error durante la peticion (a nivel visual para no confundir al usuario)
         setData({
@@ -48,7 +47,7 @@ function Login() {
 
         // Llamada al endpoint de login
         fetch(apiUrl('login'), {
-            method: 'post',
+            method: 'POST',
             headers: {
                 // Declara que tipo de contenido se le envia al backend, otra opcion podria ser XML
                 'Content-Type': 'application/json'
@@ -67,7 +66,7 @@ function Login() {
         }).then(data => {
             // Si todo se ejecuto OK, hace un dispatch de login con los datos que vienen de la API
             dispatch({
-                type: 'LOGIN',
+                type: LOGIN,
                 payload: data
             })
 
@@ -88,56 +87,54 @@ function Login() {
         <div className="login-container">
             <div className="card">
                 <div className="container">
-                    <form>
-                        <h1>Inicio de sesión</h1>
+                    <h1>Inicio de sesión</h1>
 
-                        <label htmlFor="email">
-                            Email
-                            <input
-                                type="text"
-                                value={data.email}
-                                onChange={handleInputChange}
-                                name="email"
-                                id="email"
-                            />
-                        </label>
+                    <label htmlFor="email">
+                        Email
+                        <input
+                            type="text"
+                            value={data.email}
+                            onChange={handleInputChange}
+                            name="email"
+                            id="email"
+                        />
+                    </label>
 
-                        <label htmlFor="password">
-                            Contraseña
-                            <input
-                                type="password"
-                                value={data.password}
-                                onChange={handleInputChange}
-                                name="password"
-                                id="password"
-                            />
-                        </label>
+                    <label htmlFor="password">
+                        Contraseña
+                        <input
+                            type="password"
+                            value={data.password}
+                            onChange={handleInputChange}
+                            name="password"
+                            id="password"
+                        />
+                    </label>
 
-                        <label htmlFor="token">
-                            Token
-                            <input
-                                type="password"
-                                value={data.token}
-                                onChange={handleInputChange}
-                                name="token"
-                                id="token"
-                            />
-                        </label>
+                    <label htmlFor="token">
+                        Token
+                        <input
+                            type="password"
+                            value={data.token}
+                            onChange={handleInputChange}
+                            name="token"
+                            id="token"
+                        />
+                    </label>
 
-                        {/* Si se estan enviando datos al servidor, se deshabilita el boton de ingresar y se muestra mensaje de espera */}
-                        <button onClick={handleFormSubmit} disabled={data.isSubmitting}>
-                            {data.isSubmitting ? (
-                                "Espere..."
-                            ) : (
-                                "Ingresar"
-                            )}
-                        </button>
-
-                        {/* Si hay mensajes de error, se muestran */}
-                        {data.errorMessage && (
-                            <span className="form-error">{data.errorMessage}</span>
+                    {/* Si se estan enviando datos al servidor, se deshabilita el boton de ingresar y se muestra mensaje de espera */}
+                    <button onClick={handleFormSubmit} disabled={data.isSubmitting}>
+                        {data.isSubmitting ? (
+                            "Espere..."
+                        ) : (
+                            "Ingresar"
                         )}
-                    </form>
+                    </button>
+
+                    {/* Si hay mensajes de error, se muestran */}
+                    {data.errorMessage && (
+                        <span className="form-error">{data.errorMessage}</span>
+                    )}
                     <br />
                     <Link to="/register">Registrarse</Link>
                     <br />

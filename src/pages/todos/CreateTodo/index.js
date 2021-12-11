@@ -21,7 +21,7 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 // De forma dinamica, cambiara de un input puntual el valor que se le pase como parametro
-                [action.payload.input]:  action.payload.value
+                [action.payload.input]: action.payload.value
             }
         case 'CREATE_TODO_REQUEST':
             return {
@@ -60,7 +60,7 @@ function CreateTodo() {
                 input: event.target.name,
                 value: event.target.value
             }
-        })        
+        })
     }
 
     // Funcion que envia los datos a la API
@@ -71,7 +71,7 @@ function CreateTodo() {
 
         // Llamada al endpoint de todos
         fetch(apiUrl('todos'), {
-            method: 'post',
+            method: 'POST',
             headers: {
                 'Authorization': authState.token,
                 'Content-Type': 'application/json'
@@ -121,60 +121,54 @@ function CreateTodo() {
         <div className="create-todo container">
             <div className="card">
                 <div className="container">
-                    <form>
-                        <h1>Inicio de sesión</h1>
+                    <h1>Crear todo</h1>
 
-                        <label htmlFor="email">
-                            Email
-                            <input
-                                type="text"
-                                value={state.email}
-                                onChange={handleInputChange}
-                                name="email"
-                                id="email"
-                            />
-                        </label>
+                    <label htmlFor="email">
+                        Email
+                        <input
+                            type="text"
+                            value={state.email}
+                            onChange={handleInputChange}
+                            name="email"
+                            id="email"
+                        />
+                    </label>
 
-                        <label htmlFor="password">
-                            Contraseña
-                            <input
-                                type="password"
-                                value={state.password}
-                                onChange={handleInputChange}
-                                name="password"
-                                id="password"
-                            />
-                        </label>
+                    <label htmlFor="password">
+                        Contraseña
+                        <input
+                            type="password"
+                            value={state.password}
+                            onChange={handleInputChange}
+                            name="password"
+                            id="password"
+                        />
+                    </label>
 
-                        <label htmlFor="token">
-                            Token
-                            <input
-                                type="password"
-                                value={state.token}
-                                onChange={handleInputChange}
-                                name="token"
-                                id="token"
-                            />
-                        </label>
+                    <label htmlFor="token">
+                        Token
+                        <input
+                            type="password"
+                            value={state.token}
+                            onChange={handleInputChange}
+                            name="token"
+                            id="token"
+                        />
+                    </label>
 
-                        {/* Si se estan enviando datos al servidor, se deshabilita el boton y se muestra mensaje de espera */}
-                        <button onClick={handleFormSubmit} disabled={state.isSubmitting}>
-                            {state.isSubmitting ? (
-                                "Espere..."
-                            ) : (
-                                "Ingresar"
-                            )}
-                        </button>
-
-                        {/* Si hay mensajes de error, se muestran */}
-                        {state.errorMessage && (
-                            <span className="form-error">{state.errorMessage}</span>
+                    {/* Si se estan enviando datos al servidor, se deshabilita el boton y se muestra mensaje de espera */}
+                    <button onClick={handleFormSubmit} disabled={state.isSubmitting}>
+                        {state.isSubmitting ? (
+                            "Espere..."
+                        ) : (
+                            "Ingresar"
                         )}
-                    </form>
-                    <br />
-                    <Link to="/register">Registrarse</Link>
-                    <br />
-                    <Link to="/">Volver a landing</Link>
+                    </button>
+
+                    {/* Si hay mensajes de error, se muestran */}
+                    {state.errorMessage && (
+                        <span className="form-error">{state.errorMessage}</span>
+                    )}
                 </div>
             </div>
         </div>

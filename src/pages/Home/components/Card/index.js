@@ -2,13 +2,16 @@ import React, { useContext } from 'react'
 import { Eye, Trash, Circle, CircleFill } from 'react-bootstrap-icons'
 import { useNavigate } from 'react-router'
 import { AuthContext } from '../../../../App'
+import { TodosContext } from '../..'
 import { apiUrl } from '../../../../utils/api-url'
 import { refreshToken } from '../../../../utils/refresh-token'
 import './style.scss'
+import { TODO_DELETED } from '../../action-types'
 
 function Card({ todo }) {
     const navigate = useNavigate()
     const { state: authState, dispatch: authDispatch } = useContext(AuthContext)
+    const { state: todosState, dispatch: todosDispatch } = useContext(TodosContext)
 
     const toggleTodoCompletion = () => {
         fetch(apiUrl(`/todos/${todo.id}/toggle-complete`), {
@@ -60,14 +63,20 @@ function Card({ todo }) {
             }
         }).then(response => {
             if (response.ok) {
-                return response.json()
+                return
             } else {
                 throw response
             }
-        }).then(data => {
+        }).then(() => {
             // Manejar caso de exito
             // Eliminar del state mediante dispatch al contexto padre
             alert('Se pudo eliminar la tarea de forma exitosa')
+            todosDispatch({
+                type: TODO_DELETED,
+                payload: {
+                    id: todo.id     // Le dice al reducer de la home, cual es la todo a eliminar del state
+                }
+            })
         }).catch(error => {
             console.error('Error al eliminar todo', error)
 

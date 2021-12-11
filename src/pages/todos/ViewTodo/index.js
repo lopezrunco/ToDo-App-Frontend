@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useReducer } from "react"
 import { useNavigate, useParams } from "react-router" // useParams se usa para acceder a los parametros de la url
 import { Link } from "react-router-dom"
+import { HIDE_LOADER, SHOW_LOADER } from "../../../action-types"
 import { AuthContext } from "../../../App"
 import { apiUrl } from "../../../utils/api-url"
 import { refreshToken } from "../../../utils/refresh-token"
@@ -45,7 +46,10 @@ function ViewTodo() {
     const { state: authState, dispatch: authDispatch } = useContext(AuthContext)    //Uso del reducer de app.js. Toma el contexto de autenticacion para obtener por ejemplo un token. Y toma el dispatch para disparar acciones
 
     useEffect(() => {
-        // Este dispatch indica que comenzo a hacerse el fetch, entonces se puede mostrar un loader por ejemplo
+        authDispatch({
+            type: SHOW_LOADER
+        })
+
         dispacth({
             type: 'FETCH_TODO_REQUEST'
         })
@@ -63,7 +67,6 @@ function ViewTodo() {
                 throw response
             }
         }).then(data => {
-            console.log('FETCH_TODO_SUCCESS')
             // Si salio todo ok, actualiza el state emitiendo un dispatch de tipo success
             dispacth({
                 type: 'FETCH_TODO_SUCCESS',
@@ -88,12 +91,27 @@ function ViewTodo() {
                     type: 'FETCH_TODO_FAILURE'
                 })
             }
+            // Finally ejecuta un codigo una vez terminado el try/catch, independientemente de lo que haya pasado en la ejecucion
+        }).finally(() => {
+            authDispatch({
+                type: HIDE_LOADER
+            })
         })
     }, [id, authDispatch, authState.token, authState.refreshToken, navigate])   // Cuando cambien estos valores de redispara el hook
 
     return (
         <div className="view-todo">
-            <p>Pagina para ver un todo id: {id}</p>
+
+            {state.todo && (
+                <>
+                    <p>
+                        Pagina para ver el todo id: {id}
+                    </p>
+                    <p>
+                        Titulo: {state.todo.title}
+                    </p>
+                </>
+            )}
 
             {state.hasError && (
                 <p>Ocurrio un error al obtener el todo</p>

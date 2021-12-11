@@ -2,6 +2,8 @@ import './App.scss'
 import React, { createContext, useReducer } from 'react'
 import { Routes, Route } from 'react-router-dom'
 
+import { HIDE_LOADER, LOGIN, LOGOUT, REFRESH_TOKEN, SHOW_LOADER } from './action-types'
+
 // Paginas
 import Home from './pages/Home'
 import CreateTodo from './pages/todos/CreateTodo'
@@ -19,6 +21,7 @@ import Users from './pages/backoffice/Users'
 import Nav from './components/Nav'
 // Componente para requerir autenticacion en determinadas rutas
 import RequireAuth from './components/RequireAuth'
+import Loader from './components/Loader'
 
 // Creacion de contexto de autenticacion (Se crean contextos para manejos de datos diferentes entre si)
 export const AuthContext = createContext()
@@ -30,14 +33,15 @@ const initialState = {
   user: JSON.parse(localStorage.getItem('user')),
   role: localStorage.getItem('role'),
   token: localStorage.getItem('token'),
-  refreshToken: localStorage.getItem('refreshToken')
+  refreshToken: localStorage.getItem('refreshToken'),
+  showingLoader: false    // Propiedad para manejar los escenarios de carga
 }
 
 // Reducer: elemento que recibe eventos del contexto y reacciona modificando el estado del componente
 // En este caso maneja dos acciones: tipo login y tipo logout
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'LOGIN':
+    case LOGIN:
       // Se toman los valores del usuario y se setean en el local storage
       localStorage.setItem('user', JSON.stringify(action.payload.user))
       localStorage.setItem('role', action.payload.user.role)
@@ -53,7 +57,7 @@ const reducer = (state, action) => {
         token: action.payload.user.token,
         refreshToken: action.payload.user.refreshToken
       }
-    case 'REFRESH_TOKEN': 
+    case REFRESH_TOKEN: 
         localStorage.setItem('token', action.payload.token)
         localStorage.setItem('refreshToken', action.payload.refreshToken)
 
@@ -62,7 +66,7 @@ const reducer = (state, action) => {
         token: action.payload.token,
         refreshToken: action.payload.refreshToken
       }
-    case 'LOGOUT':
+    case LOGOUT:
       // Limpia los valores del local storage
       localStorage.clear()
 
@@ -74,6 +78,16 @@ const reducer = (state, action) => {
         role: null,
         token: null,
         refreshToken: null
+      }
+    case SHOW_LOADER:
+      return {
+        ...state,
+        showingLoader: true,
+      }
+    case HIDE_LOADER:
+      return {
+        ...state,
+        showingLoader: false,
       }
     default:
       // Si la accion no matchea ninguno de los casos, retorna el mismo estado
@@ -101,7 +115,7 @@ function App() {
     // Si el usuario esta logueado, se hace un dispatch de tipo login con los datos
     if (user && token) {
       dispatch({
-        type: 'LOGIN',
+        type: LOGIN,
         payload: {
           user,
           role,
@@ -183,6 +197,11 @@ function App() {
           } />
 
         </Routes>
+
+        {/* El loader se muestra si showingLoader es true */}
+        {state.showingLoader && (
+          <Loader />
+        )}
 
       </div>
     </AuthContext.Provider>

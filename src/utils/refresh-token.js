@@ -1,3 +1,4 @@
+import { LOGOUT, REFRESH_TOKEN } from '../action-types'
 import { apiUrl } from './api-url'
 
 export const refreshToken = (token, dispatch, navigate, callback) => {
@@ -20,7 +21,7 @@ export const refreshToken = (token, dispatch, navigate, callback) => {
         // Dicho aviso llegara al reducer del app.js, que actualiza el local storage y el state con los nuevos valores
         // Al hacer dicha actualizacion se disparara nuevamente el useEffect
         dispatch({
-            type: 'REFRESH_TOKEN',
+            type: REFRESH_TOKEN,
             payload: response
         })
 
@@ -35,7 +36,7 @@ export const refreshToken = (token, dispatch, navigate, callback) => {
         console.error(error)
 
         dispatch({
-            type: 'LOGOUT'
+            type: LOGOUT
         })
 
         navigate('/login')

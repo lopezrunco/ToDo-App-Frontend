@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { LOGIN } from '../../../action-types'
 import { AuthContext } from '../../../App'
 import { apiUrl } from '../../../utils/api-url'
 
@@ -46,7 +47,7 @@ function Register() {
 
         // Llamada al endpoint de login
         fetch(apiUrl('register'), {
-            method: 'post',
+            method: 'POST',
             headers: {
                 // Declara que tipo de contenido se le envia al backend, otra opcion podria ser XML
                 'Content-Type': 'application/json'
@@ -65,7 +66,7 @@ function Register() {
         }).then(data => {
             // Si todo se ejecuto OK, hace un dispatch de login con los datos que vienen de la API
             dispatch({
-                type: 'LOGIN',
+                type: LOGIN,
                 payload: data
             })
 
@@ -86,56 +87,54 @@ function Register() {
         <div className="login-container">
             <div className="card">
                 <div className="container">
-                    <form>
-                        <h1>Registro de nueva cuenta</h1>
+                    <h1>Registro de nueva cuenta</h1>
 
-                        <label htmlFor="name">
-                            Nombre
-                            <input
-                                type="text"
-                                value={data.name}
-                                onChange={handleInputChange}
-                                name="name"
-                                id="name"
-                            />
-                        </label>
+                    <label htmlFor="name">
+                        Nombre
+                        <input
+                            type="text"
+                            value={data.name}
+                            onChange={handleInputChange}
+                            name="name"
+                            id="name"
+                        />
+                    </label>
 
-                        <label htmlFor="email">
-                            Email
-                            <input
-                                type="text"
-                                value={data.email}
-                                onChange={handleInputChange}
-                                name="email"
-                                id="email"
-                            />
-                        </label>
+                    <label htmlFor="email">
+                        Email
+                        <input
+                            type="text"
+                            value={data.email}
+                            onChange={handleInputChange}
+                            name="email"
+                            id="email"
+                        />
+                    </label>
 
-                        <label htmlFor="password">
-                            Contraseña
-                            <input
-                                type="password"
-                                value={data.password}
-                                onChange={handleInputChange}
-                                name="password"
-                                id="password"
-                            />
-                        </label>
+                    <label htmlFor="password">
+                        Contraseña
+                        <input
+                            type="password"
+                            value={data.password}
+                            onChange={handleInputChange}
+                            name="password"
+                            id="password"
+                        />
+                    </label>
 
-                        {/* Si se estan enviando datos al servidor, se deshabilita el boton de ingresar y se muestra mensaje de espera */}
-                        <button onClick={handleFormSubmit} disabled={data.isSubmitting}>
-                            {data.isSubmitting ? (
-                                "Espere..."
-                            ) : (
-                                "Ingresar"
-                            )}
-                        </button>
-
-                        {/* Si hay mensajes de error, se muestran */}
-                        {data.errorMessage && (
-                            <span className="form-error">{data.errorMessage}</span>
+                    {/* Si se estan enviando datos al servidor, se deshabilita el boton de ingresar y se muestra mensaje de espera */}
+                    <button onClick={handleFormSubmit} disabled={data.isSubmitting}>
+                        {data.isSubmitting ? (
+                            "Espere..."
+                        ) : (
+                            "Ingresar"
                         )}
-                    </form>
+                    </button>
+
+                    {/* Si hay mensajes de error, se muestran */}
+                    {data.errorMessage && (
+                        <span className="form-error">{data.errorMessage}</span>
+                    )}
                     <br />
                     <Link to="/login">Iniciar sesion</Link>
                     <br />
