@@ -37,9 +37,14 @@ function Nav() {
                         <li className="nav-item">
                             <NavLink to="/home">Home</NavLink>
                         </li>
-                        <li className="nav-item">
-                            <NavLink to="/stats">Estadisticas</NavLink>
-                        </li>
+
+                        {
+                            ['ADMIN'].find(role => role === authState.role) &&
+                            <li className="nav-item">
+                                <NavLink to="/stats">Estadisticas</NavLink>
+                            </li>
+                        }
+
                         <li className="nav-item">
                             <NavLink to="/prefs">Preferencias</NavLink>
                         </li>

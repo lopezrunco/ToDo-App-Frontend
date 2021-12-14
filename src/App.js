@@ -1,8 +1,7 @@
 import './App.scss'
 import React, { createContext, useReducer } from 'react'
 import { Routes, Route } from 'react-router-dom'
-
-import { HIDE_LOADER, LOGIN, LOGOUT, REFRESH_TOKEN, SHOW_LOADER } from './action-types'
+import { ENABLE_MFA, HIDE_LOADER, LOGIN, LOGOUT, REFRESH_TOKEN, SHOW_LOADER } from './action-types'
 
 // Paginas
 import Home from './pages/Home'
@@ -78,6 +77,21 @@ const reducer = (state, action) => {
         role: null,
         token: null,
         refreshToken: null
+      }
+    case ENABLE_MFA:
+      // Aqui basicamente clona el usuario actual y le habilita el MFA
+      const user = {
+        ...state.user,
+        mfaEnabled: true
+      }
+
+      // Guarda el local storage para que muestre el boton dehabilitado las siguientes veces que cargue
+      localStorage.setItem('user', JSON.stringify(user))
+
+      // Actualiza el state
+      return {
+        ...state,
+        user
       }
     case SHOW_LOADER:
       return {
@@ -156,7 +170,7 @@ function App() {
           } />
 
           <Route path="/stats" element={
-            <RequireAuth>
+            <RequireAuth allowedRoles={['ADMIN']}>
               <Nav />
               <Stats />
             </RequireAuth>

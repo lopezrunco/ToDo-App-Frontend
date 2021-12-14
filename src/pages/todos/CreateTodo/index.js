@@ -1,5 +1,5 @@
-import React, { useReducer } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useReducer, useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../../App'
 import { apiUrl } from '../../../utils/api-url'
 import { refreshToken } from '../../../utils/refresh-token'
@@ -48,7 +48,7 @@ const reducer = (state, action) => {
 
 function CreateTodo() {
     const [state, dispatch] = useReducer(reducer, initialState)
-    const { state: authState, dispatch: authDispatch } = React.useContext(AuthContext)
+    const { state: authState, dispatch: authDispatch } = useContext(AuthContext)
     const navigate = useNavigate()
 
     // Esta funcion se invoca en el onChange de los inputs
@@ -87,10 +87,10 @@ function CreateTodo() {
             } else {
                 throw response
             }
-        }).then(state => {
+        }).then(data => {
             dispatch({
                 type: 'CREATE_TODO_SUCCESS',
-                payload: state
+                payload: data
             })
 
             navigate('/home')
