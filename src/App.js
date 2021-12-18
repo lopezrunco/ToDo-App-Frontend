@@ -1,6 +1,6 @@
 import './App.scss'
-import React, { createContext, useReducer } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import React, { createContext, useReducer, useEffect } from 'react'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import { ENABLE_MFA, HIDE_LOADER, LOGIN, LOGOUT, REFRESH_TOKEN, SHOW_LOADER } from './action-types'
 
 // Paginas
@@ -21,6 +21,7 @@ import Nav from './components/Nav'
 // Componente para requerir autenticacion en determinadas rutas
 import RequireAuth from './components/RequireAuth'
 import Loader from './components/Loader'
+import { apiUrl } from './utils/api-url'
 
 // Creacion de contexto de autenticacion (Se crean contextos para manejos de datos diferentes entre si)
 export const AuthContext = createContext()
@@ -56,9 +57,9 @@ const reducer = (state, action) => {
         token: action.payload.user.token,
         refreshToken: action.payload.user.refreshToken
       }
-    case REFRESH_TOKEN: 
-        localStorage.setItem('token', action.payload.token)
-        localStorage.setItem('refreshToken', action.payload.refreshToken)
+    case REFRESH_TOKEN:
+      localStorage.setItem('token', action.payload.token)
+      localStorage.setItem('refreshToken', action.payload.refreshToken)
 
       return {
         ...state,
@@ -110,17 +111,39 @@ const reducer = (state, action) => {
 }
 
 function App() {
-
+  const location = useLocation()
   // Hook de useReducer: en el se envia la funcion reducer y el estado inicial que manejara el reducer
   // Deja disponible:
   // - El estado que sera manejado por el reducer
   // - El dispatch (funcion usada para el envio y recepcion de eventos)
   const [state, dispatch] = useReducer(reducer, initialState)
 
+  // Cada vez que se cambia de ruta en la navegacion, se dispara este hook personalizado que guarda el evento de navegacion
+  useEffect(() => {
+    // Se hace el fetch solo si el usuario esta autenticado
+    if (state.isAuthenticated) {
+      fetch(apiUrl('events'), {
+        method: 'POST',
+        headers: {
+          'Authorization': state.token, // Importante pasar el token
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          type: 'NAVIGATION',
+          context: {
+            location: location.pathname + location.search
+          }
+        })
+      }).then().catch(error => {
+        console.error('Error en el fetch de eventos', error)
+      })
+    }
+  }, [location, state.isAuthenticated, state.token])
+
   // Hook useEffect: Restablece el estado de la app cada vez que carga por primera vez
   // UseEffect se utiliza para disparar comportamientos que no bloqueen el rendering de la app
   React.useEffect(() => {
-    
+
     // Se intenta obtener del local storage todos los datos del usuario
     const user = JSON.parse(localStorage.getItem('user'))
     const role = localStorage.getItem('role')
