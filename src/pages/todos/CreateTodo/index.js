@@ -7,9 +7,9 @@ import './style.scss'
 
 // Declaracion del estado inicial del usuario (todo vacio)
 const initialState = {
-    email: '',
-    password: '',
-    token: '',
+    title: '',
+    description: '',
+    priority: '',
     isSending: false,
     hasError: false
 }
@@ -77,9 +77,10 @@ function CreateTodo() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                email: state.email,
-                password: state.password,
-                token: state.token
+                title: state.title,
+                description: state.description,
+                priority: state.priority,
+                completed: false
             })
         }).then(response => {
             if (response.ok) {
@@ -121,38 +122,38 @@ function CreateTodo() {
         <div className="create-todo container">
             <div className="card">
                 <div className="container">
-                    <h1>Crear todo</h1>
+                    <h1>Create todo</h1>
 
-                    <label htmlFor="email">
-                        Email
+                    <label htmlFor="title">
+                        Title
                         <input
                             type="text"
-                            value={state.email}
+                            value={state.title}
                             onChange={handleInputChange}
-                            name="email"
-                            id="email"
+                            name="title"
+                            id="title"
                         />
                     </label>
 
-                    <label htmlFor="password">
-                        Contraseña
+                    <label htmlFor="description">
+                        Description
                         <input
-                            type="password"
-                            value={state.password}
+                            type="text"
+                            value={state.description}
                             onChange={handleInputChange}
-                            name="password"
-                            id="password"
+                            name="description"
+                            id="description"
                         />
                     </label>
 
-                    <label htmlFor="token">
-                        Token
+                    <label htmlFor="priority">
+                        Priority
                         <input
-                            type="password"
-                            value={state.token}
+                            type="text"
+                            value={state.priority}
                             onChange={handleInputChange}
-                            name="token"
-                            id="token"
+                            name="priority"
+                            id="priority"
                         />
                     </label>
 
