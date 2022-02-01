@@ -42,7 +42,7 @@ const reducer = (state, action) => {
 function ViewTodo() {
     const navigate = useNavigate()
     const { id } = useParams()  // De los parametros toma el id
-    const [ state, dispacth ] = useReducer(reducer, initialState) // Uso del reducer de este archivo
+    const [state, dispacth] = useReducer(reducer, initialState) // Uso del reducer de este archivo
     const { state: authState, dispatch: authDispatch } = useContext(AuthContext)    //Uso del reducer de app.js. Toma el contexto de autenticacion para obtener por ejemplo un token. Y toma el dispatch para disparar acciones
 
     useEffect(() => {
@@ -100,24 +100,26 @@ function ViewTodo() {
     }, [id, authDispatch, authState.token, authState.refreshToken, navigate])   // Cuando cambien estos valores de redispara el hook
 
     return (
-        <div className="view-todo">
+        <div className="view-todo container">
+            <div className="card">
+                <div className="container">
 
-            {state.todo && (
-                <>
-                    <p>
-                        Pagina para ver el todo id: {id}
-                    </p>
-                    <p>
-                        Titulo: {state.todo.title}
-                    </p>
-                </>
-            )}
+                    {state.todo && (
+                        <>
+                            <h2>Titulo: {state.todo.title}</h2>
+                            <p>ID: {id}</p>
+                            <p>Description: {state.todo.description}</p>
+                            <p>Priority: {state.todo.priority}</p>
+                        </>
+                    )}
 
-            {state.hasError && (
-                <p>Ocurrio un error al obtener el todo</p>
-            )}
+                    {state.hasError && (
+                        <p>Ocurrio un error al obtener el todo</p>
+                    )}
 
-            <Link to="/home">Volver a home</Link>
+                    <Link to="/home">Volver a home</Link>
+                </div>
+            </div>
         </div>
     )
 }
