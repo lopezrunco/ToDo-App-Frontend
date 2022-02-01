@@ -1,5 +1,6 @@
 import React, { useEffect, useContext, useReducer } from 'react'
 import { LineChart, Line, PieChart, Pie, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts'
+
 import { apiUrl } from '../../utils/api-url'
 import { AuthContext } from '../../App'
 import {
@@ -31,7 +32,7 @@ const reducer = (state, action) => {
                 hasError: false
             }
         case FETCH_LOGINS_IN_OVER_TIME_SUCCESS:
-            // Separa los datos para que sean mas sencillos de manejar en la grafica
+            // Separate data for better handling in the charts
             const loginsInTime = action.payload.events.map(event => {
                 return {
                     date: event.date,
@@ -149,7 +150,7 @@ function Stats() {
                     payload: data
                 })
             }).catch(error => {
-                console.error('Error en fetch de estadisticas', error)
+                console.error('Error fetching stats', error)
 
                 dispatch({
                     type: FETCH_LOGINS_IN_OVER_TIME_FAILURE
@@ -174,7 +175,7 @@ function Stats() {
                     payload: data
                 })
             }).catch(error => {
-                console.error('Error en fetch de estadisticas', error)
+                console.error('Error fetching stats', error)
 
                 dispatch({
                     type: FETCH_REGISTERS_IN_OVER_TIME_FAILURE
@@ -199,7 +200,7 @@ function Stats() {
                     payload: data
                 })
             }).catch(error => {
-                console.error('Error en fetch de estadisticas', error)
+                console.error('Error fetching stats', error)
 
                 dispatch({
                     type: FETCH_GROUPED_EVENTS_FAILURE
@@ -209,10 +210,10 @@ function Stats() {
     }, [authDispatch, authState.token])
 
     return (
-        <div className="page-stats">
+        <div className="page-stats container">
             <h2>Stats page</h2>
 
-            <h5>Logins diarios</h5>
+            <h5>Daily logins</h5>
             <LineChart
                 width={500}
                 height={300}
@@ -225,7 +226,7 @@ function Stats() {
                 <Line type="monotone" dataKey="inTime" stroke="#8884d8" />
             </LineChart>
 
-            <h5>Logins en el tiempo (crecimiento)</h5>
+            <h5>Logins in time (increase)</h5>
             <LineChart
                 width={500}
                 height={300}
@@ -240,7 +241,7 @@ function Stats() {
 
             <hr />
 
-            <h5>Registros diarios</h5>
+            <h5>Daily registers</h5>
             <LineChart
                 width={500}
                 height={300}
@@ -253,7 +254,7 @@ function Stats() {
                 <Line type="monotone" dataKey="inTime" stroke="#8884d8" />
             </LineChart>
 
-            <h5>Registros en el tiempo (crecimiento)</h5>
+            <h5>Registers in time (increase)</h5>
             <LineChart
                 width={500}
                 height={300}
@@ -268,7 +269,7 @@ function Stats() {
 
             <hr />
 
-            <h5>Contraste de eventos</h5>
+            <h5>Event contrast</h5>
             <PieChart width={400} height={400}>
                 <Pie
                     nameKey="type"

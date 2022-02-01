@@ -1,7 +1,6 @@
-// Retorna la cadena de peticion a la API dependiendo de la ruta que se reciba
+// Return the request string depending the route recived
 export const apiUrl = (path) => {
-    
-    // Si se recibio la ruta sin el simbolo /, se le coloca, si no, no hace nada 
+    // Add the / symbol if the received route don't have it 
     if (!path.startsWith('/')) {
         path = `/${path}`
     }
@@ -9,4 +8,4 @@ export const apiUrl = (path) => {
     return `${process.env.REACT_APP_API_PROTOCOL}://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}${path}`
 }
 
-// Retorna por ejemplo: http://localhost:3000/login
+// Output example: http://localhost:3000/login

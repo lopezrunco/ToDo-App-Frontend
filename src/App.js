@@ -3,7 +3,7 @@ import React, { createContext, useReducer, useEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { ENABLE_MFA, HIDE_LOADER, LOGIN, LOGOUT, REFRESH_TOKEN, SHOW_LOADER } from './action-types'
 
-// Paginas
+// Pages
 import Home from './pages/Home'
 import CreateTodo from './pages/todos/CreateTodo'
 import ViewTodo from './pages/todos/ViewTodo'
@@ -16,39 +16,31 @@ import Forbidden from './pages/access/Forbidden'
 import NotFound from './pages/access/NotFound'
 import Users from './pages/backoffice/Users'
 
-// Componentes
+// Components
 import Nav from './components/Nav'
-// Componente para requerir autenticacion en determinadas rutas
 import RequireAuth from './components/RequireAuth'
 import Loader from './components/Loader'
 import { apiUrl } from './utils/api-url'
 
-// Creacion de contexto de autenticacion (Se crean contextos para manejos de datos diferentes entre si)
 export const AuthContext = createContext()
 
-// Estado inicial del contexto de auntenticacion
-// Refleja si el usuario esta auntenticado o no, y cuales son los datos del usuario
 const initialState = {
   isAuthenticated: !!localStorage.getItem('token'),
   user: JSON.parse(localStorage.getItem('user')),
   role: localStorage.getItem('role'),
   token: localStorage.getItem('token'),
   refreshToken: localStorage.getItem('refreshToken'),
-  showingLoader: false    // Propiedad para manejar los escenarios de carga
+  showingLoader: false
 }
 
-// Reducer: elemento que recibe eventos del contexto y reacciona modificando el estado del componente
-// En este caso maneja dos acciones: tipo login y tipo logout
 const reducer = (state, action) => {
   switch (action.type) {
     case LOGIN:
-      // Se toman los valores del usuario y se setean en el local storage
       localStorage.setItem('user', JSON.stringify(action.payload.user))
       localStorage.setItem('role', action.payload.user.role)
       localStorage.setItem('token', action.payload.user.token)
       localStorage.setItem('refreshToken', action.payload.user.refreshToken)
 
-      // Se retorna un estado nuevo
       return {
         ...state,
         isAuthenticated: true,
@@ -67,10 +59,8 @@ const reducer = (state, action) => {
         refreshToken: action.payload.refreshToken
       }
     case LOGOUT:
-      // Limpia los valores del local storage
       localStorage.clear()
 
-      // Se retorna un nuevo estado, ya reseteado
       return {
         ...state,
         isAuthenticated: false,
@@ -80,16 +70,15 @@ const reducer = (state, action) => {
         refreshToken: null
       }
     case ENABLE_MFA:
-      // Aqui basicamente clona el usuario actual y le habilita el MFA
+      // Clones the actual user and enables the MFA
       const user = {
         ...state.user,
         mfaEnabled: true
       }
 
-      // Guarda el local storage para que muestre el boton dehabilitado las siguientes veces que cargue
+      // Saves on local storage to disable the button next time
       localStorage.setItem('user', JSON.stringify(user))
 
-      // Actualiza el state
       return {
         ...state,
         user
@@ -105,27 +94,21 @@ const reducer = (state, action) => {
         showingLoader: false,
       }
     default:
-      // Si la accion no matchea ninguno de los casos, retorna el mismo estado
       return state
   }
 }
 
 function App() {
   const location = useLocation()
-  // Hook de useReducer: en el se envia la funcion reducer y el estado inicial que manejara el reducer
-  // Deja disponible:
-  // - El estado que sera manejado por el reducer
-  // - El dispatch (funcion usada para el envio y recepcion de eventos)
   const [state, dispatch] = useReducer(reducer, initialState)
 
-  // Cada vez que se cambia de ruta en la navegacion, se dispara este hook personalizado que guarda el evento de navegacion
+  // On navigate change, this custom hook saves the navigation event
   useEffect(() => {
-    // Se hace el fetch solo si el usuario esta autenticado
     if (state.isAuthenticated) {
       fetch(apiUrl('events'), {
         method: 'POST',
         headers: {
-          'Authorization': state.token, // Importante pasar el token
+          'Authorization': state.token,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
@@ -140,16 +123,12 @@ function App() {
     }
   }, [location, state.isAuthenticated, state.token])
 
-  // Hook useEffect: Restablece el estado de la app cada vez que carga por primera vez
-  // UseEffect se utiliza para disparar comportamientos que no bloqueen el rendering de la app
   React.useEffect(() => {
-
-    // Se intenta obtener del local storage todos los datos del usuario
     const user = JSON.parse(localStorage.getItem('user'))
     const role = localStorage.getItem('role')
     const token = localStorage.getItem('token')
 
-    // Si el usuario esta logueado, se hace un dispatch de tipo login con los datos
+    // If user is logued, dispatch the user data
     if (user && token) {
       dispatch({
         type: LOGIN,
@@ -161,10 +140,7 @@ function App() {
       })
     }
   }, [])
-  // El parametro donde esta el array vacio se utiliza cuando 
-  // quiero prestar atencion a alguna propiedad en particular del estado
 
-  // Render del componente
   return (
     <AuthContext.Provider value={{ state, dispatch }}>
       <div className="App">
@@ -241,7 +217,6 @@ function App() {
 
         </Routes>
 
-        {/* El loader se muestra si showingLoader es true */}
         {state.showingLoader && (
           <Loader />
         )}

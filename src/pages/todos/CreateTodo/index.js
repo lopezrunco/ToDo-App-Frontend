@@ -1,11 +1,11 @@
 import React, { useReducer, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
+
 import { AuthContext } from '../../../App'
 import { apiUrl } from '../../../utils/api-url'
 import { refreshToken } from '../../../utils/refresh-token'
 import './style.scss'
 
-// Declaracion del estado inicial del usuario (todo vacio)
 const initialState = {
     title: '',
     description: '',
@@ -16,11 +16,10 @@ const initialState = {
 
 const reducer = (state, action) => {
     switch (action.type) {
-        // Modifica el estado al cambiar el estado del input
+        // Update state on input change
         case 'FORM_INPUT_CHANGE':
             return {
                 ...state,
-                // De forma dinamica, cambiara de un input puntual el valor que se le pase como parametro
                 [action.payload.input]: action.payload.value
             }
         case 'CREATE_TODO_REQUEST':
@@ -51,9 +50,7 @@ function CreateTodo() {
     const { state: authState, dispatch: authDispatch } = useContext(AuthContext)
     const navigate = useNavigate()
 
-    // Esta funcion se invoca en el onChange de los inputs
     const handleInputChange = (event) => {
-        // Emision de dispatch que toma los valores del evento del formulario
         dispatch({
             type: 'FORM_INPUT_CHANGE',
             payload: {
@@ -63,13 +60,11 @@ function CreateTodo() {
         })
     }
 
-    // Funcion que envia los datos a la API
     const handleFormSubmit = () => {
         dispatch({
             type: 'CREATE_TODO_REQUEST'
         })
 
-        // Llamada al endpoint de todos
         fetch(apiUrl('todos'), {
             method: 'POST',
             headers: {
@@ -98,15 +93,12 @@ function CreateTodo() {
         }).catch(error => {
             console.error('Error en crear todo', error)
 
-            // Si da error 401, quiere decir que el token por algun motivo estaba mal
             if (error.status === 401) {
-
-                // Funcion utilitaria para refrescar el token
                 refreshToken(
                     authState.refreshToken,
                     authDispatch,
                     navigate,
-                    () => handleFormSubmit()    // Si el refresh sale bien, intenta nuevamente hacer la peticion
+                    () => handleFormSubmit()
                 )
             } else if (error.status === 403) {
                 navigate('/forbidden')
@@ -157,16 +149,14 @@ function CreateTodo() {
                         />
                     </label>
 
-                    {/* Si se estan enviando datos al servidor, se deshabilita el boton y se muestra mensaje de espera */}
                     <button onClick={handleFormSubmit} disabled={state.isSubmitting}>
                         {state.isSubmitting ? (
-                            "Espere..."
+                            "Please wait..."
                         ) : (
-                            "Ingresar"
+                            "Create"
                         )}
                     </button>
 
-                    {/* Si hay mensajes de error, se muestran */}
                     {state.errorMessage && (
                         <span className="form-error">{state.errorMessage}</span>
                     )}
