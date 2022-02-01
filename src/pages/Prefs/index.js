@@ -1,5 +1,6 @@
 import React, { useReducer, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
+
 import { ENABLE_MFA, HIDE_LOADER, SHOW_LOADER } from '../../action-types'
 import { AuthContext } from '../../App'
 import { apiUrl } from '../../utils/api-url'
@@ -73,7 +74,7 @@ function Prefs() {
                 type: ENABLE_MFA
             })
         }).catch(error => {
-            console.error('Error al habilitar MFA', error)
+            console.error('Error trying to enable MFA', error)
 
             if (error.status === 401) {
                 refreshToken(
@@ -97,19 +98,18 @@ function Prefs() {
     }
 
     return (
-        <div className="page-prefs">
-            <h2>Preferencias</h2>
+        <div className="page-prefs container">
+            <h2>Preferences</h2>
 
-            <h3>Seguridad</h3>
+            <h3>Security</h3>
             <h4>MFA</h4>
 
-            {/* Si el usuario tiene el MFA ya activado, se deshabilita el boton */}
-            <button onClick={handleEnableMfa} disabled={authState.user.mfaEnabled}>Habilitar MFA</button>
-            {/* Se muestra solo si el MFA tiene valor */}
+            {/* If the user already has MFA enabled, the button will be disabled */}
+            <button onClick={handleEnableMfa} disabled={authState.user.mfaEnabled}>Enable MFA</button>
             {
                 state.mfa &&
                 <>
-                    <p>Clave secreta: {state.mfa.secret}</p>
+                    <p>Secret key: {state.mfa.secret}</p>
                     <img src={state.mfa.qr} />
                 </>
             }

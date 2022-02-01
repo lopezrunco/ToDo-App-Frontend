@@ -1,17 +1,14 @@
-import './style.scss'
 import React from 'react'
+import { Check2Circle } from 'react-bootstrap-icons'
+
 import { AuthContext } from '../../App'
 import Card from './components/Card'
 
-// Importacion de icono desde react bootstrap
-import { Check2Circle } from 'react-bootstrap-icons'
-
+import './style.scss'
 
 function Landing() {
-    // Acceso a la info de autenticacion, para saber si esta logueado o no, para mostrar un boton u otro
     const { state } = React.useContext(AuthContext)
 
-    // Extraccion de estilos en linea para reusarlos
     const cardStyle = {
         width: '80%',
         height: '300px',

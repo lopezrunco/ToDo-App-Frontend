@@ -1,20 +1,17 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Check2Circle } from 'react-bootstrap-icons'
-import { AuthContext } from '../../App'
-import NavLink from '../NavLink'
-
-// Uso de React Bootstrap
 import Button from 'react-bootstrap/Button'
+
+import { AuthContext } from '../../App'
 import { LOGOUT } from '../../action-types'
+
+import NavLink from '../NavLink'
 
 function Nav() {
     const { state: authState, dispatch } = React.useContext(AuthContext)
     const navigate = useNavigate()
 
-    // Al clickear el boton de salir, se llama esta funcion
-    // que emite un dispatch de tipo logout y luego navega a la landing
-    // Ese dispatch emitido se toma en el app.js, que limpia el localstorage y resetea el estado de autenticacion del usuario 
     const logout = () => {
         dispatch({ type: LOGOUT })
         navigate('/')
@@ -24,7 +21,7 @@ function Nav() {
         <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <div className="container-fluid">
                 <a className="navbar-brand" href="/">
-                    Tasky <Check2Circle />
+                    Duit <Check2Circle />
                 </a>
 
                 <button className="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
@@ -41,27 +38,26 @@ function Nav() {
                         {
                             ['ADMIN'].find(role => role === authState.role) &&
                             <li className="nav-item">
-                                <NavLink to="/stats">Estadisticas</NavLink>
+                                <NavLink to="/stats">Stats</NavLink>
                             </li>
                         }
 
                         <li className="nav-item">
-                            <NavLink to="/prefs">Preferencias</NavLink>
+                            <NavLink to="/prefs">Preferences</NavLink>
                         </li>
 
-                        {/* Si el usuario logueado es ADMIN, se muestra el link */}
-                        {/* Si hay mas roles permitidos, se agregan al array y de esa forma amplia la busqueda */}
-                        {/* Este componente se puede usar en cualquier lugar, para mostrar algo dependiendo del rol del usuario logueado */}
+                        {/* Only visible for admin users */}
+                        {/* If more roles are allowed, push them to the array */}
                         {
                             ['ADMIN'].find(role => role === authState.role) &&
                             <li className="nav-item">
-                                <NavLink to="/backoffice/users">Usuarios</NavLink>
+                                <NavLink to="/backoffice/users">Users</NavLink>
                             </li>
                         }
 
                         <li className="nav-item">
                             {/* Uso de React Bootstrap */}
-                            <Button variant="link" className="nav-link" onClick={logout}>Salir</Button>
+                            <Button variant="link" className="nav-link" onClick={logout}>Logout</Button>
                         </li>
                     </ul>
                 </div>

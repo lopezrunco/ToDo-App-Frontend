@@ -222,7 +222,10 @@ function App() {
           } />
 
           <Route path="/forbidden" element={
-            <Forbidden />
+            <>
+              <Nav />
+              <Forbidden />
+            </>
           } />
 
           <Route path="/" element={
@@ -230,7 +233,10 @@ function App() {
           } />
 
           <Route path="*" element={
-            <NotFound />
+            <>
+              <Nav />
+              <NotFound />
+            </>
           } />
 
         </Routes>

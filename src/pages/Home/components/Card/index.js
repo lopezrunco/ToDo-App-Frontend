@@ -1,12 +1,14 @@
 import React, { useContext } from 'react'
 import { Eye, Trash, Circle, CircleFill } from 'react-bootstrap-icons'
 import { useNavigate } from 'react-router'
+
 import { AuthContext } from '../../../../App'
 import { TodosContext } from '../..'
 import { apiUrl } from '../../../../utils/api-url'
 import { refreshToken } from '../../../../utils/refresh-token'
-import './style.scss'
 import { TODO_DELETED } from '../../action-types'
+
+import './style.scss'
 
 function Card({ todo }) {
     const navigate = useNavigate()
@@ -15,7 +17,7 @@ function Card({ todo }) {
 
     const toggleTodoCompletion = () => {
         fetch(apiUrl(`/todos/${todo.id}/toggle-complete`), {
-            method: 'PATCH', // Pasar el metodo para indicar que se debe editar. Por defecto, si no se pone metodo, asume GET
+            method: 'PATCH',
             headers: {
                 'Authorization': authState.token,
                 'Content-Type': 'application/json'
@@ -27,14 +29,13 @@ function Card({ todo }) {
                 throw response
             }
         }).then(data => {
-            // manejar caso de xtio
-            // modificar el estate mediante dispatch al contexto padre
-            alert(`Tarea marcada como: ${todo.completed ? 'Finalizada' : 'Sin completar'}`)
+            // TODO: handle success case
+            // update state by dispatch to the parent context
+            alert(`Task is: ${todo.completed ? 'finished' : 'unfinished'}`)
         }).catch(error => {
-            console.error('Error al hacer toggle en todo', error)
+            console.error('Error trying to update the todo', error)
 
             if (error.status === 401) {
-                // Si sen vencio el token, lo refresca y al terminar hace retry de la misma operacion
                 refreshToken(
                     authState.refreshToken,
                     authDispatch,
@@ -44,19 +45,18 @@ function Card({ todo }) {
             } else if (error.status === 403) {
                 navigate('./forbidden')
             } else {
-                alert('Error al intentar cambiar el estado de la tarea')
+                alert('Error trying to update the todo')
             }
         })
     }
 
     const viewTodo = () => {
-        // Al hacer click en el boton de ver, toma el id de la tarea y abre la viewTodo page con dicha tarea
         navigate(`/todos/${todo.id}`)
     }
 
     const deleteTodo = () => {
         fetch(apiUrl(`/todos/${todo.id}`), {
-            method: 'DELETE', // Pasar el metodo para indicar que se debe borrar. Por defecto, si no se pone metodo, asume GET
+            method: 'DELETE',
             headers: {
                 'Authorization': authState.token,
                 'Content-Type': 'application/json'
@@ -68,20 +68,17 @@ function Card({ todo }) {
                 throw response
             }
         }).then(() => {
-            // Manejar caso de exito
-            // Eliminar del state mediante dispatch al contexto padre
-            alert('Se pudo eliminar la tarea de forma exitosa')
+            alert('Todo deleted!')
             todosDispatch({
                 type: TODO_DELETED,
                 payload: {
-                    id: todo.id     // Le dice al reducer de la home, cual es la todo a eliminar del state
+                    id: todo.id     // Update the home reducer, indicating the todo to delete
                 }
             })
         }).catch(error => {
-            console.error('Error al eliminar todo', error)
+            console.error('Error trying to delete the todo', error)
 
             if (error.status === 401) {
-                // Si sen vencio el token, lo refresca y al terminar hace retry de la misma operacion
                 refreshToken(
                     authState.refreshToken,
                     authDispatch,
@@ -91,8 +88,7 @@ function Card({ todo }) {
             } else if (error.status === 403) {
                 navigate('./forbidden')
             } else {
-                // manejar caso error
-                alert('Error al intentar eliminar la tarea')
+                alert('Error trying to delete the todo')
             }
         })
     }
@@ -111,7 +107,6 @@ function Card({ todo }) {
                         className="btn-change-todo-status fab fab-mini me-2 d-flex justify-content-center align-items-center bg-primary"
                         onClick={toggleTodoCompletion}
                     >
-                        {/* Ternario para cambiar el icono dependiendo de si la tarea esta completa o no */}
                         {todo.completed ? (
                             <CircleFill color="white" />
                         ) : (

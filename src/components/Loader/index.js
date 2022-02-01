@@ -1,10 +1,11 @@
 import React from "react"
+
 import './style.scss'
 
 function Loader() {
     return (
         <div className='loader-component'>
-            <p>Cargando...</p>
+            <p>Loading...</p>
         </div>
     )
 }

@@ -2,9 +2,9 @@ import { Link } from "react-router-dom"
 
 function Forbidden() {
     return (
-        <div>
-            <h2>Acceso no permitido</h2>
-            <Link to="/home">Volver a home</Link>
+        <div className="container">
+            <h2>Forbidden access</h2>
+            <Link to="/home">Back to home</Link>
         </div>
     )
 }
