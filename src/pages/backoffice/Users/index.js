@@ -95,17 +95,21 @@ function Users() {
     }, [authDispatch, authState.token, authState.refreshToken])
 
     return (
-        <main className='select-opponent container'>
-            <div className="row">
-                <div className="col-12">
+        <main className='list-users container'>
+
+            <div className='row'>
+                <div className='col-12 title'>
+                    <h2>Users</h2>
+                    <div className='separator'></div>
                     {!state.hasError && (
                         <div className='count-info'>
-                            <h2>Users:</h2>
-                            <h6>Count: {state.users.length}</h6>
+                            <small>Users registered: {state.users.length}</small>
                         </div>
                     )}
                 </div>
+            </div>
 
+            <div className="row">
                 <div className="col-12">
                     <div className='row'>
                         {state.isFetching ? (

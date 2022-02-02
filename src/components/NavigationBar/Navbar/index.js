@@ -13,7 +13,7 @@ function Navbar({ open, handleClick }) {
 
     const logout = () => {
         authDispatch({ type: LOGOUT })
-        navigate('/logged-out')
+        navigate('/')
     }
 
     return (

@@ -5,6 +5,8 @@ import { LOGIN } from '../../../action-types'
 import { AuthContext } from '../../../App'
 import { apiUrl } from '../../../utils/api-url'
 
+import '../styles.scss'
+
 function Register() {
 
     const { dispatch } = React.useContext(AuthContext)
@@ -69,60 +71,62 @@ function Register() {
     }
 
     return (
-        <div className="login-container">
-            <div className="card">
-                <div className="container">
-                    <h1>Register</h1>
+        <div className="log-reg-container container">
 
-                    <label htmlFor="name">
-                        Name
-                        <input
-                            type="text"
-                            value={data.name}
-                            onChange={handleInputChange}
-                            name="name"
-                            id="name"
-                        />
-                    </label>
-
-                    <label htmlFor="email">
-                        Email
-                        <input
-                            type="text"
-                            value={data.email}
-                            onChange={handleInputChange}
-                            name="email"
-                            id="email"
-                        />
-                    </label>
-
-                    <label htmlFor="password">
-                        Password
-                        <input
-                            type="password"
-                            value={data.password}
-                            onChange={handleInputChange}
-                            name="password"
-                            id="password"
-                        />
-                    </label>
-
-                    <button onClick={handleFormSubmit} disabled={data.isSubmitting}>
-                        {data.isSubmitting ? (
-                            "Please wait..."
-                        ) : (
-                            "Register"
-                        )}
-                    </button>
-
-                    {data.errorMessage && (
-                        <span className="form-error">{data.errorMessage}</span>
-                    )}
-                    <br />
-                    <Link to="/login">Login</Link>
-                    <br />
-                    <Link to="/">Back landing</Link>
+            <div className='row'>
+                <div className='col-12 title'>
+                    <h2>Register</h2>
+                    <div className='separator'></div>
                 </div>
+            </div>
+
+            <label htmlFor="name">
+                Name
+                <input
+                    type="text"
+                    value={data.name}
+                    onChange={handleInputChange}
+                    name="name"
+                    id="name"
+                />
+            </label>
+
+            <label htmlFor="email">
+                Email
+                <input
+                    type="text"
+                    value={data.email}
+                    onChange={handleInputChange}
+                    name="email"
+                    id="email"
+                />
+            </label>
+
+            <label htmlFor="password">
+                Password
+                <input
+                    type="password"
+                    value={data.password}
+                    onChange={handleInputChange}
+                    name="password"
+                    id="password"
+                />
+            </label>
+
+            <button className='button primary-button' onClick={handleFormSubmit} disabled={data.isSubmitting}>
+                {data.isSubmitting ? (
+                    "Please wait..."
+                ) : (
+                    "Register"
+                )}
+            </button>
+
+            {data.errorMessage && (
+                <span className="form-error">{data.errorMessage}</span>
+            )}
+            <div className='text-center'>
+                <p>Already have an account? <Link to="/login">Login</Link></p>
+                <Link to="/">Back landing</Link>
             </div>
         </div>
     )

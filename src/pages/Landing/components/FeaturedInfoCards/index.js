@@ -11,7 +11,7 @@ function FeaturedInfoCards() {
 
                     <FeaturedInfoCardItem 
                         iconClassName="far fa-calendar-alt" 
-                        title="Start each day feeling calm and in control" 
+                        title="Start each day feeling in control" 
                         content="Have a clear idea of ​​everything you have to do and never lose track of an important task." 
                     />
 

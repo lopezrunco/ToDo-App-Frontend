@@ -7,7 +7,7 @@ function NotFound() {
     const { state: authState } = React.useContext(AuthContext)
 
     return (
-        <div className="container">
+        <div className="container pt-5 text-center">
             <h2>Not found!</h2>
             
             {authState.isAuthenticated ? (

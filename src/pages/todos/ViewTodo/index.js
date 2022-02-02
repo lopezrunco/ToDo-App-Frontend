@@ -7,8 +7,6 @@ import { AuthContext } from "../../../App"
 import { apiUrl } from "../../../utils/api-url"
 import { refreshToken } from "../../../utils/refresh-token"
 
-import './style.scss'
-
 const initialState = {
     todos: undefined,
     isFetching: false,
@@ -21,7 +19,7 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 isFetching: true,
-                hasError: false 
+                hasError: false
             }
         case 'FETCH_TODO_SUCCESS':
             return {
@@ -96,15 +94,23 @@ function ViewTodo() {
 
     return (
         <div className="view-todo container">
+
+            <div className='row'>
+                <div className='col-12 title'>
+                    <h2>My tasks</h2>
+                    <div className='separator'></div>
+                </div>
+            </div>
+
             <div className="card">
-                <div className="container">
+                <div className="container p-5">
 
                     {state.todo && (
                         <>
-                            <h2>Title: {state.todo.title}</h2>
-                            <p>ID: {id}</p>
-                            <p>Description: {state.todo.description}</p>
-                            <p>Priority: {state.todo.priority}</p>
+                            <h5>{state.todo.title}</h5>
+                            <small><strong>Task id:</strong> {id}</small>
+                            <p><strong>Description:</strong> {state.todo.description}</p>
+                            <p><strong>Priority:</strong> {state.todo.priority}</p>
                         </>
                     )}
 
@@ -112,9 +118,9 @@ function ViewTodo() {
                         <p>Error obtaining the todo</p>
                     )}
 
-                    <Link to="/home">Back to home</Link>
                 </div>
             </div>
+            <Link className="button primary-button" to="/home">Back to home</Link>
         </div>
     )
 }

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../../App'
 import { apiUrl } from '../../../utils/api-url'
 import { refreshToken } from '../../../utils/refresh-token'
+
 import './style.scss'
 
 const initialState = {
@@ -112,9 +113,16 @@ function CreateTodo() {
 
     return (
         <div className="create-todo container">
+
+            <div className='row'>
+                <div className='col-12 title'>
+                    <h2>Create todo</h2>
+                    <div className='separator'></div>
+                </div>
+            </div>
+
             <div className="card">
-                <div className="container">
-                    <h1>Create todo</h1>
+                <div className="container create-todo-container p-5">
 
                     <label htmlFor="title">
                         Title
@@ -149,7 +157,7 @@ function CreateTodo() {
                         />
                     </label>
 
-                    <button onClick={handleFormSubmit} disabled={state.isSubmitting}>
+                    <button className='button primary-button' onClick={handleFormSubmit} disabled={state.isSubmitting}>
                         {state.isSubmitting ? (
                             "Please wait..."
                         ) : (

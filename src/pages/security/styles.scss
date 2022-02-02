@@ -1,9 +1,14 @@
-.create-todo-container {
+.log-reg-container {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   gap: 1rem;
+  padding-top: 3rem;
+
+  .title {
+    margin-bottom: 0;
+  }
 
   label {
     display: flex;

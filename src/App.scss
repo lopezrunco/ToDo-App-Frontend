@@ -31,6 +31,17 @@ ul {
 }
 
 // Sections and spacing
+
+main.page-home,
+.page-stats,
+.view-todo,
+.create-todo,
+main.list-users,
+.page-prefs,
+.log-reg-container {
+  margin-top: 1rem;
+}
+
 section {
   padding: 6rem 0;
 }
@@ -108,6 +119,7 @@ h5,
 h6 {
   font-weight: 700;
   margin-bottom: 1rem;
+  color: $dark-text-color;
 }
 
 h1 {
@@ -145,6 +157,7 @@ i {
   padding: 0.5rem 1rem;
   border-radius: $border-radius;
   font-weight: 700;
+  border: none;
 
   &:hover {
     color: $light-text-color;

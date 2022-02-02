@@ -213,17 +213,18 @@ function Stats() {
         <div className="page-stats container">
 
             <div className='row'>
-                <div className='col-12'>
-                    <h2>Stats page</h2>
+                <div className='col-12 title'>
+                    <h2>Stats</h2>
+                    <div className='separator'></div>
                 </div>
             </div>
 
             <div className='row'>
-                <div className='col-md-6 mb-5'>
+                <div className='col-md-4 mb-5'>
                     <h5>Daily logins</h5>
                     <LineChart
-                        width={400}
-                        height={300}
+                        width={300}
+                        height={200}
                         data={state.loginsInTime}
                     >
                         <CartesianGrid strokeDasharray="5" />
@@ -234,11 +235,11 @@ function Stats() {
                     </LineChart>
                 </div>
 
-                <div className='col-md-6 mb-5'>
+                <div className='col-md-4 mb-5'>
                     <h5>Logins in time (increase)</h5>
                     <LineChart
-                        width={400}
-                        height={300}
+                        width={300}
+                        height={200}
                         data={state.loginsOverTime}
                     >
                         <CartesianGrid strokeDasharray="5" />
@@ -249,11 +250,11 @@ function Stats() {
                     </LineChart>
                 </div>
 
-                <div className='col-md-6 mb-5'>
+                <div className='col-md-4 mb-5'>
                     <h5>Daily registers</h5>
                     <LineChart
-                        width={400}
-                        height={300}
+                        width={300}
+                        height={200}
                         data={state.registersInTime}
                     >
                         <CartesianGrid strokeDasharray="5" />
@@ -267,8 +268,8 @@ function Stats() {
                 <div className='col-md-6 mb-5'>
                     <h5>Registers in time (increase)</h5>
                     <LineChart
-                        width={400}
-                        height={300}
+                        width={300}
+                        height={200}
                         data={state.registersOverTime}
                     >
                         <CartesianGrid strokeDasharray="5" />
@@ -279,10 +280,9 @@ function Stats() {
                     </LineChart>
                 </div>
 
-                <div className='col-md-12 d-flex flex-column align-items-center'>
-                    <hr />
+                <div className='col-md-6 mb-5 d-flex flex-column align-items-start'>
                     <h5>Event contrast</h5>
-                    <PieChart width={400} height={400}>
+                    <PieChart width={200} height={200}>
                         <Pie
                             nameKey="type"
                             dataKey="count"

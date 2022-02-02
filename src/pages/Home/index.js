@@ -121,7 +121,15 @@ function Home() {
         // All children elements of home has access to the todo context, specifically to the state and dispatch
         <TodosContext.Provider value={{ state, dispatch }}>
             <main className="page-home container mb-5">
-                <div className="bg-light p-4 rounded">
+                <div className="bg-light rounded">
+
+                    <div className='row'>
+                        <div className='col-12 title'>
+                            <h2>My tasks</h2>
+                            <div className='separator'></div>
+                        </div>
+                    </div>
+
                     {/* <div className="input-group mb-4">
                         <input id="search-keywords" type="text" className="form-control" placeholder="Write your task ..." />
                         <button className="btn btn-secondary" type="button" onClick={search}>Search</button>

@@ -99,13 +99,22 @@ function Prefs() {
 
     return (
         <div className="page-prefs container">
-            <h2>Preferences</h2>
 
-            <h3>Security</h3>
+            <div className='row'>
+                <div className='col-12 title'>
+                    <h2>Preferences</h2>
+                    <div className='separator'></div>
+                </div>
+            </div>
+
             <h4>MFA</h4>
+            <p>
+                Multi-Factor Authentication (MFA) increases security of your account.
+                To use this feature, click on the button Enable MFA.
+            </p>
 
             {/* If the user already has MFA enabled, the button will be disabled */}
-            <button onClick={handleEnableMfa} disabled={authState.user.mfaEnabled}>Enable MFA</button>
+            <button className='button primary-button' onClick={handleEnableMfa} disabled={authState.user.mfaEnabled}>Enable MFA</button>
             {
                 state.mfa &&
                 <>
