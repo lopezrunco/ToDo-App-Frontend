@@ -1,3 +1,5 @@
+@import '../../../../Variables';
+
 section.reviews {
   padding-bottom: 0;
 }
@@ -10,24 +12,15 @@ section.reviews .container .reviews-slider .slider-container {
   width: 100%;
   align-items: center;
 }
-section.reviews .container .reviews-slider .slider-container .slider-item {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  flex-shrink: 0;
-  align-items: center;
-  gap: 3rem;
-  height: 100%;
-  width: 100%;
-}
+
 section.reviews
   .container
   .reviews-slider
   .slider-container
   .slider-item
   .left-content {
-  font-size: 5rem;
-  color: #3bccff;
+  font-size: 3rem;
+  color: $primary-color;
 }
 section.reviews
   .container
@@ -38,16 +31,7 @@ section.reviews
   i {
   margin-bottom: 0;
 }
-section.reviews
-  .container
-  .reviews-slider
-  .slider-container
-  .slider-item
-  .right-content {
-  text-align: left;
-  border-left: 0.3rem solid #65bc7b;
-  padding-left: 3rem;
-}
+
 section.reviews
   .container
   .reviews-slider

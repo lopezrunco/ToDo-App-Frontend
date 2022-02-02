@@ -5,7 +5,8 @@ function Footer() {
         <footer>
             <div className="container">
                 <small>© Duit <span id="year"></span> | All rights reserved</small>
-                <small>A+ Full Stack <a href="https://github.com/lopezrunco" target="_blank">Damián López</a></small>
+                <small>| <a href="https://github.com/lopezrunco/ToDo-App-Frontend" target="_blank">Frontend</a></small>
+                <small>| <a href="https://github.com/lopezrunco/ToDo-App-API-MongoDB" target="_blank">API</a></small>
             </div>
         </footer> 
     )

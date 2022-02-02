@@ -1,7 +1,18 @@
+@import "../../../../Variables";
+
 section.prices {
-  background-color: #252525;
-  color: #f5f5f5;
+  background-color: $dark-bg-color;
+  color: $light-text-color;
 }
+
+section.prices {
+  .title {
+    h2 {
+      color: $light-text-color;
+    }
+  }
+}
+
 section.prices .prices-content {
   justify-content: center;
 }
@@ -14,10 +25,15 @@ section.prices .prices-content > div .price-card {
   justify-content: center;
   align-items: center;
   border-radius: 0.2rem;
-  background-color: #252525;
+  background-color: $dark-bg-color;
   padding: 4rem 2rem;
   background-color: #295f37;
 }
+
+section.prices .prices-content > div .price-card h2 {
+  color: $light-text-color;
+}
+
 section.prices .prices-content > div .price-card .icon-bg {
   text-align: center;
   border-bottom: 2px solid #f5f5f5;

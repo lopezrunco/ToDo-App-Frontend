@@ -3,12 +3,14 @@ section.home-intro {
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
+  padding: 0;
 }
 section.home-intro .container {
   text-align: center;
   gap: 2rem;
   width: 95%;
   height: 100%;
+  padding: 2rem 1rem;
 }
 section.home-intro .container a {
   color: #f5f5f5;

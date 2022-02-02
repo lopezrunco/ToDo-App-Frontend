@@ -1,9 +1,64 @@
+@import "./Variables";
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 ::selection {
-  background: #78c2ad3b;
+  background: $selection-color;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: $light-bg-color;
+  color: $dark-text-color;
+  font-size: 1rem;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.primary-color {
+  color: $primary-color;
+}
+
+// Sections and spacing
+section {
+  padding: 6rem 0;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.separator {
+  display: block;
+  height: 0.3rem;
+  width: 3rem;
+  background-color: $primary-color;
+  margin: 0 auto;
+  margin-bottom: 1rem;
+}
+
+.overflow-h {
+  overflow-y: hidden;
+}
+
+a {
+  text-decoration: none;
 }
 
 .loader-overlay {
-  background-color: #d1d1d1c4;
+  background-color: $dark-bg-color;
   width: 100%;
   height: 100%;
   position: fixed;
@@ -30,16 +85,119 @@
   height: 35px;
 }
 
-.fab.fab-fixed  > i {
+.fab.fab-fixed > i {
   font-size: 30px;
 }
 
 .fab > i {
-  color: white;
+  color: $light-text-color;
 }
 
 .card-floating-actions {
   position: absolute;
   left: -20px;
   bottom: -20px;
+}
+
+// Headings
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+h6 {
+  font-size: 1.5rem;
+}
+
+p {
+  margin-bottom: 0.5rem;
+}
+
+span {
+  display: inline-block;
+}
+
+a {
+  display: inline-block;
+  transition: $main-transition;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+i {
+  margin-bottom: 2rem;
+}
+
+// Buttons
+.button {
+  margin: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: $border-radius;
+  font-weight: 700;
+
+  &:hover {
+    color: $light-text-color;
+  }
+}
+
+.primary-button {
+  background-color: $primary-color;
+  color: $light-text-color;
+
+  &:hover {
+    background-color: $secondary-color;
+  }
+}
+
+.secondary-button {
+  background-color: $secondary-color;
+  color: $light-text-color;
+
+  &:hover {
+    background-color: lighten($color: $secondary-color, $amount: 1);
+  }
+}
+
+.outline-button {
+  cursor: pointer;
+  border: 3px solid $primary-color;
+  border-radius: $border-radius;
+  padding: 0.5rem 5rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: $primary-color !important;
+
+  &:hover {
+    background-color: $primary-color;
+    color: $light-text-color !important;
+  }
+}
+
+.outline-button.filled {
+  background-color: $primary-color;
+  color: $light-text-color !important;
+}
+
+// Page header
+section.page-header {
+  background-color: $dark-bg-color;
+  color: $light-text-color;
+  text-align: left;
+  padding: 6rem 0 2rem 0;
+
+  .separator {
+    margin: 0;
+    margin-bottom: 1rem;
+  }
 }

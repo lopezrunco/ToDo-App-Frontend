@@ -1,4 +1,5 @@
 import logo from '../../assets/img/logo.png'
+import NavigationLink from '../NavigationLink'
 import './style.scss'
 
 function Bottom() {
@@ -26,8 +27,8 @@ function Bottom() {
                         </div>
                         <div className="col-md-3 user-links">
                             <h3>User links</h3>
-                            <a onClick="openLoginRegisterModal()">Login</a>
-                            <a onClick="openLoginRegisterModal()">Register</a>
+                            <NavigationLink to='/login'>Login</NavigationLink>
+                            <NavigationLink to='/register'>Register</NavigationLink>
                         </div>
 
                     </div>

@@ -1,10 +1,3 @@
-import { useContext } from 'react'
-import { AuthContext } from '../../App'
-
-import './style.scss'
-
-// Components
-// import LandingHeader from './components/LandingHeader'
 import NavigationBar from '../../components/NavigationBar'
 import HomeIntro from './components/HomeIntro'
 import FeaturedInfoCards from './components/FeaturedInfoCards'
@@ -12,7 +5,8 @@ import Prices from './components/Prices'
 import Reviews from './components/Reviews'
 import Bottom from '../../components/Bottom'
 import Footer from '../../components/Footer'
-// import GoToTop from '../../components/GoToTop'
+
+import './style.scss'
 
 function Landing() {
     return (
@@ -24,7 +18,6 @@ function Landing() {
                 <Prices />
                 <Reviews />
                 <Bottom />
-                {/* <GoToTop /> */}
             </main>
             <Footer />
         </div>
