@@ -211,78 +211,93 @@ function Stats() {
 
     return (
         <div className="page-stats container">
-            <h2>Stats page</h2>
 
-            <h5>Daily logins</h5>
-            <LineChart
-                width={500}
-                height={300}
-                data={state.loginsInTime}
-            >
-                <CartesianGrid strokeDasharray="5" />
-                <XAxis dataKey="date" />
-                <YAxis />
-                <Tooltip />
-                <Line type="monotone" dataKey="inTime" stroke="#8884d8" />
-            </LineChart>
+            <div className='row'>
+                <div className='col-12'>
+                    <h2>Stats page</h2>
+                </div>
+            </div>
 
-            <h5>Logins in time (increase)</h5>
-            <LineChart
-                width={500}
-                height={300}
-                data={state.loginsOverTime}
-            >
-                <CartesianGrid strokeDasharray="5" />
-                <XAxis dataKey="date" />
-                <YAxis />
-                <Tooltip />
-                <Line type="monotone" dataKey="overTime" stroke="#63d461" />
-            </LineChart>
+            <div className='row'>
+                <div className='col-md-6 mb-5'>
+                    <h5>Daily logins</h5>
+                    <LineChart
+                        width={400}
+                        height={300}
+                        data={state.loginsInTime}
+                    >
+                        <CartesianGrid strokeDasharray="5" />
+                        <XAxis dataKey="date" />
+                        <YAxis />
+                        <Tooltip />
+                        <Line type="monotone" dataKey="inTime" stroke="#8884d8" />
+                    </LineChart>
+                </div>
 
-            <hr />
+                <div className='col-md-6 mb-5'>
+                    <h5>Logins in time (increase)</h5>
+                    <LineChart
+                        width={400}
+                        height={300}
+                        data={state.loginsOverTime}
+                    >
+                        <CartesianGrid strokeDasharray="5" />
+                        <XAxis dataKey="date" />
+                        <YAxis />
+                        <Tooltip />
+                        <Line type="monotone" dataKey="overTime" stroke="#63d461" />
+                    </LineChart>
+                </div>
 
-            <h5>Daily registers</h5>
-            <LineChart
-                width={500}
-                height={300}
-                data={state.registersInTime}
-            >
-                <CartesianGrid strokeDasharray="5" />
-                <XAxis dataKey="date" />
-                <YAxis />
-                <Tooltip />
-                <Line type="monotone" dataKey="inTime" stroke="#8884d8" />
-            </LineChart>
+                <div className='col-md-6 mb-5'>
+                    <h5>Daily registers</h5>
+                    <LineChart
+                        width={400}
+                        height={300}
+                        data={state.registersInTime}
+                    >
+                        <CartesianGrid strokeDasharray="5" />
+                        <XAxis dataKey="date" />
+                        <YAxis />
+                        <Tooltip />
+                        <Line type="monotone" dataKey="inTime" stroke="#8884d8" />
+                    </LineChart>
+                </div>
 
-            <h5>Registers in time (increase)</h5>
-            <LineChart
-                width={500}
-                height={300}
-                data={state.registersOverTime}
-            >
-                <CartesianGrid strokeDasharray="5" />
-                <XAxis dataKey="date" />
-                <YAxis />
-                <Tooltip />
-                <Line type="monotone" dataKey="overTime" stroke="#63d461" />
-            </LineChart>
+                <div className='col-md-6 mb-5'>
+                    <h5>Registers in time (increase)</h5>
+                    <LineChart
+                        width={400}
+                        height={300}
+                        data={state.registersOverTime}
+                    >
+                        <CartesianGrid strokeDasharray="5" />
+                        <XAxis dataKey="date" />
+                        <YAxis />
+                        <Tooltip />
+                        <Line type="monotone" dataKey="overTime" stroke="#63d461" />
+                    </LineChart>
+                </div>
 
-            <hr />
+                <div className='col-md-12 d-flex flex-column align-items-center'>
+                    <hr />
+                    <h5>Event contrast</h5>
+                    <PieChart width={400} height={400}>
+                        <Pie
+                            nameKey="type"
+                            dataKey="count"
+                            data={state.groupedEvents}
+                            cx="50%"
+                            cy="50%"
+                            outerRadius={80}
+                            fill="#8884d8"
+                            label
+                        />
+                        <Tooltip />
+                    </PieChart>
+                </div>
+            </div>
 
-            <h5>Event contrast</h5>
-            <PieChart width={400} height={400}>
-                <Pie
-                    nameKey="type"
-                    dataKey="count"
-                    data={state.groupedEvents}
-                    cx="50%"
-                    cy="50%"
-                    outerRadius={80}
-                    fill="#8884d8"
-                    label
-                />
-                <Tooltip />
-            </PieChart>
         </div>
     )
 }

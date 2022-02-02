@@ -102,7 +102,7 @@ function Card({ todo }) {
                 </div>
 
                 <div className="card-floating-actions d-flex">
-                    <button
+                    {/* <button
                         type="button"
                         className="btn-change-todo-status fab fab-mini me-2 d-flex justify-content-center align-items-center bg-primary"
                         onClick={toggleTodoCompletion}
@@ -112,7 +112,7 @@ function Card({ todo }) {
                         ) : (
                             <Circle color="white" />
                         )}
-                    </button>
+                    </button> */}
 
                     <button
                         type="button"
