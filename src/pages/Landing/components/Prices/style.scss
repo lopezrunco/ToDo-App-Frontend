@@ -1,0 +1,65 @@
+section.prices {
+  background-color: #252525;
+  color: #f5f5f5;
+}
+section.prices .prices-content {
+  justify-content: center;
+}
+section.prices .prices-content > div {
+  margin-bottom: 2rem;
+}
+section.prices .prices-content > div .price-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.2rem;
+  background-color: #252525;
+  padding: 4rem 2rem;
+  background-color: #295f37;
+}
+section.prices .prices-content > div .price-card .icon-bg {
+  text-align: center;
+  border-bottom: 2px solid #f5f5f5;
+  margin-bottom: 2rem;
+}
+section.prices .prices-content > div .price-card .icon-bg i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+section.prices .prices-content > div .price-card .plan-items-list i {
+  margin: 0 1rem 1rem 0;
+  opacity: 0.6;
+}
+section.prices .prices-content > div .price-card .price {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+section.prices .prices-content > div .price-card .price .number {
+  font-size: 3rem;
+  font-weight: 700;
+}
+section.prices .prices-content > div .price-card .price .number sup {
+  font-size: 1.7rem;
+  font-weight: 400;
+}
+section.prices .prices-content > div .price-card .price .line {
+  display: block;
+  width: 0.1rem;
+  height: 3rem;
+  background: #f5f5f5;
+  opacity: 0.6;
+}
+section.prices .prices-content > div .price-card .button {
+  margin: 0 auto;
+}
+section.prices .prices-content > div:nth-child(2) > .price-card {
+  background-color: #39824b;
+}
+section.prices .prices-content > div:nth-child(3) > .price-card {
+  background-color: #48a660;
+}

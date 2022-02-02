@@ -1,0 +1,32 @@
+footer {
+    background-color: #222222;
+    color: #f5f5f5;
+    padding: 2rem 0;
+  }
+  footer .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  footer .container small a {
+    color: #65bc7b;
+  }
+  footer .container small a:hover {
+    color: #f5f5f5;
+  }
+  
+  footer.static-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  
+  @media screen and (min-width: 490px) {
+    footer .container {
+      flex-direction: row;
+      justify-content: flex-start;
+    }
+  }
