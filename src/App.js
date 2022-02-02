@@ -17,7 +17,7 @@ import NotFound from './pages/access/NotFound'
 import Users from './pages/backoffice/Users'
 
 // Components
-import Nav from './components/Nav'
+import NavigationBar from './components/NavigationBar'
 import RequireAuth from './components/RequireAuth'
 import Loader from './components/Loader'
 import { apiUrl } from './utils/api-url'
@@ -149,42 +149,42 @@ function App() {
 
           <Route path="/home" element={
             <RequireAuth>
-              <Nav />
+              <NavigationBar />
               <Home />
             </RequireAuth>
           } />
 
           <Route path="/todos/:id" element={
             <RequireAuth>
-              <Nav />
+              <NavigationBar />
               <ViewTodo />
             </RequireAuth>
           } />
 
           <Route path="/todos/create" element={
             <RequireAuth>
-              <Nav />
+              <NavigationBar />
               <CreateTodo />
             </RequireAuth>
           } />
 
           <Route path="/stats" element={
             <RequireAuth allowedRoles={['ADMIN']}>
-              <Nav />
+              <NavigationBar />
               <Stats />
             </RequireAuth>
           } />
 
           <Route path="/prefs" element={
             <RequireAuth>
-              <Nav />
+              <NavigationBar />
               <Prefs />
             </RequireAuth>
           } />
 
           <Route path="/backoffice/users" element={
             <RequireAuth allowedRoles={['ADMIN']}>
-              <Nav />
+              <NavigationBar />
               <Users />
             </RequireAuth>
           } />
@@ -199,7 +199,7 @@ function App() {
 
           <Route path="/forbidden" element={
             <>
-              <Nav />
+              <NavigationBar />
               <Forbidden />
             </>
           } />
@@ -210,7 +210,7 @@ function App() {
 
           <Route path="*" element={
             <>
-              <Nav />
+              <NavigationBar />
               <NotFound />
             </>
           } />

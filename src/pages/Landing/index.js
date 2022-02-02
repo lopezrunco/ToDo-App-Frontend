@@ -4,7 +4,8 @@ import { AuthContext } from '../../App'
 import './style.scss'
 
 // Components
-import LandingHeader from './components/LandingHeader'
+// import LandingHeader from './components/LandingHeader'
+import NavigationBar from '../../components/NavigationBar'
 import HomeIntro from './components/HomeIntro'
 import FeaturedInfoCards from './components/FeaturedInfoCards'
 import Prices from './components/Prices'
@@ -16,7 +17,7 @@ import Footer from '../../components/Footer'
 function Landing() {
     return (
         <div>
-            <LandingHeader />
+            <NavigationBar />
             <main>
                 <HomeIntro />
                 <FeaturedInfoCards />

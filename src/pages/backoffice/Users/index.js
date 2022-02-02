@@ -5,6 +5,7 @@ import { refreshToken } from '../../../utils/refresh-token'
 import { apiUrl } from '../../../utils/api-url'
 import { AuthContext } from '../../../App'
 import { HIDE_LOADER, SHOW_LOADER } from '../../../action-types'
+import { useNavigate } from 'react-router-dom'
 
 const initialState = {
     users: [],
@@ -41,6 +42,7 @@ function Users() {
 
     const { state: authState, dispatch: authDispatch } = useContext(AuthContext)
     const [state, dispatch] = useReducer(reducer, initialState)
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (authState.token) {
